@@ -263,7 +263,7 @@ class EmployeeAdd extends React.Component {
                           />
                           <span>
                             employee {this.state.empAllocation} % is allocated
-                            for other project
+                            for other project 
                           </span>
                         </div>
                       </div>
