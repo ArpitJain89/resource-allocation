@@ -1,0 +1,141 @@
+{
+  "employees": [
+    {
+      "id": 101,
+      "emailId": "Shital@gmail.com",
+      "fullName": "Shital Thigale",
+      "jobLevel": "L2",
+      "designation": "Developer",
+      "allocation": 50
+    },
+    {
+      "id": 102,
+      "emailId": "Priya@gmail.com",
+      "fullName": "Priya Sharma",
+      "jobLevel": "L1",
+      "designation": "QA",
+      "allocation": 100
+    },
+    {
+      "id": 103,
+      "emailId": "Maya@gmail.com",
+      "fullName": "Maya Kale",
+      "jobLevel": "L2",
+      "designation": "BA",
+      "allocation": 50
+    },
+     {
+       "id": 104,
+       "emailId": "Pravin@gmail.com",
+       "fullName": "pravin Kale",
+       "jobLevel": "L1",
+       "designation": "BA",
+       "allocation": 10
+     }
+
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Harman",
+      "description": "This project is  related to Harman",
+      "clientName": "US",
+      "Unit": "Development",
+      "startDate": "2010-02-01",
+      "endDate": "2010-04-09",
+      "ManagerName": "Pranav",
+      "employees": [
+                     {
+                       "id": 101,
+                       "emailId": "Shital@gmail.com",
+                       "fullName": "Shital Thigale",
+                       "jobLevel": "L2",
+                       "designation": "Developer",
+                       "startDate": "2010-02-01",
+                       "endDate": "2014-04-02",
+                       "allocation": 50,
+                       "projectAllocation": 50
+                     },
+                     {
+                       "id": 102,
+                       "emailId": "Priya@gmail.com",
+                       "fullName": "Priya Sharma",
+                       "jobLevel": "L1",
+                       "designation": "QA",
+                       "startDate": "2010-02-01",
+                       "endDate": "2014-04-02",
+                       "allocation": 100,
+                       "projectAllocation": 50
+                     },
+                     {
+                       "id": 104,
+                       "emailId": "Pravin@gmail.com",
+                       "fullName": "pravin Kale",
+                       "jobLevel": "L1",
+                       "designation": "BA",
+                       "startDate": "2010-02-01",
+                       "endDate": "2014-04-02",
+                       "allocation": 10,
+                       "projectAllocation": 10
+                     }
+                   ]
+    },
+    {
+      "id": 2,
+      "name": "Bajaj",
+      "description": "This project related to Bajaj",
+      "clientName": "US",
+      "Unit": "Development",
+      "startDate": "2010-02-01",
+      "endDate": "2014-04-02",
+      "ManagerName": "AJAY",
+      "employees": [
+        {
+          "id": 102,
+          "emailId": "Priya@gmail.com",
+          "fullName": "Priya Sharma",
+          "jobLevel": "L1",
+          "designation": "QA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 100,
+          "projectAllocation": 40
+        },
+        {
+          "id": 103,
+          "emailId": "Maya@gmail.com",
+          "fullName": "Maya Kale",
+          "jobLevel": "L2",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 100,
+          "projectAllocation": 50
+        }
+      ]
+    },
+     {
+      "id": 3,
+      "name": "PCYC",
+      "description": "This project is related to PCYC",
+      "clientName": "US",
+      "Unit": "Development",
+      "startDate": "2010-02-01",
+      "endDate": "2014-04-02",
+      "ManagerName": "Ruchi",
+      "employees": [
+        {
+          "id": 102,
+          "emailId": "Priya@gmail.com",
+          "fullName": "Priya Sharma",
+          "jobLevel": "L1",
+          "designation": "QA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 100,
+          "projectAllocation": 10
+        }
+      ]
+    }
+  ]
+}
