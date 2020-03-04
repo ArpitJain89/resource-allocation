@@ -101,20 +101,21 @@ class EmployeeList extends React.Component {
     return (
       <div className="card">
         <div className="card-header text-center font-weight-bolder">
-          Resource Allocation
+          <span className="col-sm-2 offset-4">Resource Allocation</span>
+          <span className="col-2 offset-4">
+            {" "}
+            <Link to={`./employee/HighChart`}>Show Statistics</Link>
+          </span>
         </div>
         <div className="card-body view-port-height">
           <div className="row">
-            <div className="col-3">
-              <button type="button">
-                <Link to={`${this.selectedProjectId}/employeeAdd`}>
-                  Add Employee
-                </Link>
-              </button>
-            </div>
+            
 
             {/* dropdown form */}
-            <div className="col-3">
+            <div className="col-3 thead-light ">
+              <label>Project Name: {this.state.projectName}</label>
+            </div>
+            <div className="col-3 ">
               <select
                 className="form-control"
                 onChange={this.onChangeOfProjectSelect}
@@ -128,7 +129,7 @@ class EmployeeList extends React.Component {
                 ))}
               </select>
             </div>
-            <div className="col-4">
+            <div className="col-3">
               <button
                 type="button"
                 className="btn btn-primary"
@@ -137,16 +138,18 @@ class EmployeeList extends React.Component {
                 Show Allocation
               </button>
             </div>
-            <div className="col-2">
-              <button type="button">
-                <Link to={`./employee/HighChart`}>Show Statistics</Link>
+           
+            <div className="col-2 offset-1">
+              <button type="button" className="btn btn-secondory">
+                <Link to={`${this.selectedProjectId}/employeeAdd`}>
+                  Add Employee
+                </Link>
               </button>
             </div>
           </div>
 
           {/* Employee List */}
 
-          <label>Project Name: {this.state.projectName}</label>
 
           <table className="table mt-3">
             <thead className="thead-light">

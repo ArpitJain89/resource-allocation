@@ -2,10 +2,10 @@ import React from "react";
 
 class Employee extends React.Component {
   employeeDetails = {};
-  projects=[];
+  projects = [];
   selectedEmployees;
   projectId;
-  empAllocation=0;
+  empAllocation = 0;
   allocationCheckForValidation;
 
   constructor(props) {
@@ -15,21 +15,22 @@ class Employee extends React.Component {
       projectAllocation: 0,
       startDate: "",
       endDate: "",
-      projectId:'',
-
+      projectId: ""
     };
     this.validationForm = {
       projectAllocation: ""
     };
     this.onChangeOfEmployeeForm = this.onChangeOfEmployeeForm.bind(this);
     this.onSubmitOfEmployeeForm = this.onSubmitOfEmployeeForm.bind(this);
-    this.projectId=this.props.match.params.projectId;
+    this.projectId = this.props.match.params.projectId;
+  }
+
+  componentWillMount() {
     this.getEmployeDetails(
       this.props.match.params.projectId,
       this.props.match.params.id
     );
   }
-
 
   /**
    * This function is used to get selected employee
@@ -51,8 +52,9 @@ class Employee extends React.Component {
         : [];
 
       // get specific selected employees
-        this.selectedEmployees = employees.filter(
-        employee => employee.id === parseInt(employeeId, 10)
+      this.selectedEmployees = employees.filter(
+        employee =>
+          employee.id === parseInt(employeeId, 10) && employee.allocation != 0
       );
 
       this.employeeDetails = this.selectedEmployees.length
@@ -69,16 +71,15 @@ class Employee extends React.Component {
   onChangeOfEmployeeForm(event) {
     let propertyName = event.target.name;
     let propertyValue = event.target.value;
-
     if (propertyName === "projectAllocation") {
       const allocation = parseInt(propertyValue, 10);
       const freeAllocation = 100 - this.employeeDetails.allocation;
-      if (allocation > freeAllocation + this.employeeDetails.projectAllocation ) 
-      {
+      if (
+        allocation >
+        freeAllocation + this.employeeDetails.projectAllocation
+      ) {
         return;
-      } 
-      else {
-        
+      } else {
       }
     }
     this.setState({
@@ -101,37 +102,36 @@ class Employee extends React.Component {
     employees.forEach(employee => {
       if (employee.id === this.employeeDetails.id) {
         if (employee.allocation > updatedAllocation) {
-          employee.allocation =  employee.allocation - (this.selectedEmployees[0].projectAllocation - updatedAllocation);
-          this.empAllocation = employee.allocation; ;
+          employee.allocation =
+            employee.allocation -
+            (this.selectedEmployees[0].projectAllocation - updatedAllocation);
+          this.empAllocation = employee.allocation;
         } else {
-          employee.allocation = employee.allocation + (updatedAllocation - this.selectedEmployees[0].projectAllocation );
-           this.empAllocation = employee.allocation; 
+          employee.allocation =
+            employee.allocation +
+            (updatedAllocation - this.selectedEmployees[0].projectAllocation);
+          this.empAllocation = employee.allocation;
         }
       }
     });
-   // allocation update in project  selectedEmployees
-   this.projects.forEach(project =>{
-        project.employees.forEach(emp=> {
-          if(emp.id===this.employeeDetails.id){
-            if (project.id ===parseInt(this.projectId)) {
-              emp.projectAllocation = updatedAllocation;
-              emp.startDate=this.state.startDate;
-              emp.endDate=this.state.endDate
-            }
-            
-            emp.allocation=this.empAllocation;
+    // allocation update in project  selectedEmployees
+    this.projects.forEach(project => {
+       project.employees.forEach(emp => {
+        if (emp.id === this.employeeDetails.id && emp.allocation > 0) {
+          if (project.id === parseInt(this.projectId)) {
+            emp.projectAllocation = updatedAllocation;
+            emp.startDate = this.state.startDate;
+            emp.endDate = this.state.endDate;
           }
-        });
-      
-    //  }
+          emp.allocation = this.empAllocation;
+        }
+      });
     });
-   
+
     sessionStorage.setItem("employees", JSON.stringify(employees));
     sessionStorage.setItem("projects", JSON.stringify(this.projects));
-     this.props.history.push("/");
+    this.props.history.push("/");
   }
-  
-  
 
   render() {
     return (
@@ -276,17 +276,16 @@ class Employee extends React.Component {
                           />
                           <span className="text ">
                             {" "}
-                             Note *: Employee can be allocated up to{" "}
+                            Note *: Employee can be allocated up to{" "}
                             {this.employeeDetails.projectAllocation +
                               (100 - this.employeeDetails.allocation)}{" "}
-                          
                           </span>
                         </div>
                       </div>
 
                       <div className="col-md-6 offset-md-4">
                         <button type="submit" className="btn btn-primary">
-                         Update
+                          Update
                         </button>
                       </div>
                     </form>

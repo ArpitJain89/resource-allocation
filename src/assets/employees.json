@@ -24,15 +24,62 @@
       "designation": "BA",
       "allocation": 50
     },
-     {
-       "id": 104,
-       "emailId": "Pravin@gmail.com",
-       "fullName": "pravin Kale",
-       "jobLevel": "L1",
-       "designation": "BA",
-       "allocation": 10
-     }
-
+    {
+      "id": 104,
+      "emailId": "Pravin@gmail.com",
+      "fullName": "pravin Kale",
+      "jobLevel": "L1",
+      "designation": "BA",
+      "allocation": 10
+    },
+    {
+      "id": 105,
+      "emailId": "Anup@gmail.com",
+      "fullName": "Anup nikam",
+      "jobLevel": "L3",
+      "designation": "BA",
+      "allocation": 10
+    },
+    {
+      "id": 106,
+      "emailId": "Akash@gmail.com",
+      "fullName": "Akash Shinde",
+      "jobLevel": "L1",
+      "designation": "BA",
+      "allocation": 10
+    },
+    {
+      "id": 107,
+      "emailId": "Ruchi@gmail.com",
+      "fullName": "Ruchi Yadav",
+      "jobLevel": "L1",
+      "designation": "BA",
+      "allocation": 20
+    },
+    {
+      "id": 108,
+      "emailId": "Shreya@gmail.com",
+      "fullName": "Shreya Kale",
+      "jobLevel": "L3",
+      "designation": "BA",
+      "allocation": 10
+    },
+    {
+      "id": 109,
+      "emailId": "Shubhi@gmail.com",
+      "fullName": "Shubhi nikam",
+      "jobLevel": "L3",
+      "designation": "BA",
+      "allocation": 20
+    },
+    {
+      "id": 110,
+      "emailId": "Nirav@gmail.com",
+      "fullName": "Nirav Dube",
+      "jobLevel": "L2",
+      "designation": "BA",
+      "allocation": 20
+    }
   ],
   "projects": [
     {
@@ -45,40 +92,40 @@
       "endDate": "2010-04-09",
       "ManagerName": "Pranav",
       "employees": [
-                     {
-                       "id": 101,
-                       "emailId": "Shital@gmail.com",
-                       "fullName": "Shital Thigale",
-                       "jobLevel": "L2",
-                       "designation": "Developer",
-                       "startDate": "2010-02-01",
-                       "endDate": "2014-04-02",
-                       "allocation": 50,
-                       "projectAllocation": 50
-                     },
-                     {
-                       "id": 102,
-                       "emailId": "Priya@gmail.com",
-                       "fullName": "Priya Sharma",
-                       "jobLevel": "L1",
-                       "designation": "QA",
-                       "startDate": "2010-02-01",
-                       "endDate": "2014-04-02",
-                       "allocation": 100,
-                       "projectAllocation": 50
-                     },
-                     {
-                       "id": 104,
-                       "emailId": "Pravin@gmail.com",
-                       "fullName": "pravin Kale",
-                       "jobLevel": "L1",
-                       "designation": "BA",
-                       "startDate": "2010-02-01",
-                       "endDate": "2014-04-02",
-                       "allocation": 10,
-                       "projectAllocation": 10
-                     }
-                   ]
+        {
+          "id": 101,
+          "emailId": "Shital@gmail.com",
+          "fullName": "Shital Thigale",
+          "jobLevel": "L2",
+          "designation": "Developer",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 50,
+          "projectAllocation": 50
+        },
+        {
+          "id": 102,
+          "emailId": "Priya@gmail.com",
+          "fullName": "Priya Sharma",
+          "jobLevel": "L1",
+          "designation": "QA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 100,
+          "projectAllocation": 50
+        },
+        {
+          "id": 104,
+          "emailId": "Pravin@gmail.com",
+          "fullName": "pravin Kale",
+          "jobLevel": "L1",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 10,
+          "projectAllocation": 10
+        }
+      ]
     },
     {
       "id": 2,
@@ -114,7 +161,7 @@
         }
       ]
     },
-     {
+    {
       "id": 3,
       "name": "PCYC",
       "description": "This project is related to PCYC",
@@ -133,6 +180,107 @@
           "startDate": "2010-02-01",
           "endDate": "2014-04-02",
           "allocation": 100,
+          "projectAllocation": 10
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Ideas to Impacts",
+      "description": "This project is  related to Ideas to Impacts",
+      "clientName": "US",
+      "Unit": "Development",
+      "startDate": "2010-02-01",
+      "endDate": "2010-04-09",
+      "ManagerName": "Ashish",
+      "employees": [
+        {
+          "id": 109,
+          "emailId": "Shubhi@gmail.com",
+          "fullName": "Shubhi nikam",
+          "jobLevel": "L3",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 20,
+          "projectAllocation": 10
+        },
+        {
+          "id": 110,
+          "emailId": "Nirav@gmail.com",
+          "fullName": "Nirav Dube",
+          "jobLevel": "L2",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 20,
+          "projectAllocation": 10
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Syntel",
+      "description": "This project is  related to syntel",
+      "clientName": "US",
+      "Unit": "Development",
+      "startDate": "2010-02-01",
+      "endDate": "2010-04-09",
+      "ManagerName": "Diwya",
+      "employees": [
+        {
+          "id": 106,
+          "emailId": "Akash@gmail.com",
+          "fullName": "Akash Shinde",
+          "jobLevel": "L1",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 10,
+          "projectAllocation": 10
+        },
+        {
+          "id": 107,
+          "emailId": "Ruchi@gmail.com",
+          "fullName": "Ruchi Yadav",
+          "jobLevel": "L1",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 10,
+          "projectAllocation": 10
+        },
+        {
+          "id": 108,
+          "emailId": "Shreya@gmail.com",
+          "fullName": "Shreya Kale",
+          "jobLevel": "L3",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 10,
+          "projectAllocation": 10
+        },
+        {
+          "id": 109,
+          "emailId": "Shubhi@gmail.com",
+          "fullName": "Shubhi nikam",
+          "jobLevel": "L3",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 20,
+          "projectAllocation": 10
+        },
+        {
+          "id": 110,
+          "emailId": "Nirav@gmail.com",
+          "fullName": "Nirav Dube",
+          "jobLevel": "L2",
+          "designation": "BA",
+          "startDate": "2010-02-01",
+          "endDate": "2014-04-02",
+          "allocation": 20,
           "projectAllocation": 10
         }
       ]

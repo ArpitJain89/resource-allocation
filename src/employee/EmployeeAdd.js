@@ -33,41 +33,14 @@ class EmployeeAdd extends React.Component {
   getEmployeDetails() {
     this.employees = JSON.parse(sessionStorage.getItem("employees"));
     this.projects = JSON.parse(sessionStorage.getItem("projects"));
-    console.log("this.projects ", this.projects);
    this.employees = this.employees.filter(emp => emp.allocation != 100);
-    //get Employee for that  project
-    // const projectEmployee = this.projects.filter(
-    //   project => project.id === parseInt(this.projectId)
-    // );
-
-    // const allEmployees = employees.filter(emp => emp.allocation != 100);
-
-    // const removeDuplicateEmp = this.removeDuplicates([
-    //   ...allEmployees,
-    //   ...projectEmployee[0].employees
-    // ]);
-
-    // console.log("removeDuplicateEmp", removeDuplicateEmp);
-
-    // var result = removeDuplicateEmp.reduce((unique, o) => {
-    //   if (!unique.some(obj => obj.id === o.id && obj.value === o.value)) {
-    //     unique.push(o);
-    //   }
-    //   return unique;
-    // }, []);
-
-    // console.log("Unique", result);
-
-    // var oldItems = result.filter(n => projectEmployee[0].employees.includes(n));
   }
   onChangeOfEmployeeSelect(event) {
     this.selectedEmployeeId = parseInt(event.target.value, 10);
-    console.log(" this.selectedEmployeeId", this.selectedEmployeeId);
     this.getEmployeDetailsById(this.selectedEmployeeId);
   }
   getEmployeDetailsById(id) {
     this.employeeDetails = this.employees.filter(emp => emp.id === id)[0];
-    console.log(" this.employeeDetails", this.employeeDetails);
     this.setState({
       empAllocation: this.employeeDetails.allocation
     });
@@ -80,8 +53,7 @@ class EmployeeAdd extends React.Component {
       const freeAllocation = 100 - this.employeeDetails.allocation;
       if (allocation > freeAllocation) {
         return;
-      } else {
-      }
+      } 
     }
     this.setState({
       [propertyName]: propertyValue
@@ -139,9 +111,7 @@ class EmployeeAdd extends React.Component {
                           <select
                             className="form-control"
                             onChange={this.onChangeOfEmployeeSelect}
-                            name="employeeName"
-                            id="employee_name"
-                            
+                            id="exampleFormControlSelect1"
                           >
                             <option>--Select Employee--</option>
                             {this.employees.map(emp => (
@@ -263,7 +233,7 @@ class EmployeeAdd extends React.Component {
                           />
                           <span>
                             employee {this.state.empAllocation} % is allocated
-                            for other project 
+                            for other project
                           </span>
                         </div>
                       </div>

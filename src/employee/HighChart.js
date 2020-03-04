@@ -45,7 +45,7 @@ class HighChart extends React.Component {
       text: "Projects Vs Employee Job Level"
     },
     xAxis: {
-      categories: ["L1", "L2"],
+      categories: ["L1", "L2","L3"],
       crosshair: true
     },
     yAxis: {
@@ -78,31 +78,26 @@ class HighChart extends React.Component {
     super(props);
     this.state = {
       projectData: [],
-      series: [
-        {
-          name: "ABC",
-          data: []
-        },
-        {
-          name: "XYZ",
-          data: []
-        },
-        {
-          name: "PCYC",
-          data: []
-        }
-      ],
+     
       seriesForJobLevel: [
         {
-          name: "ABC",
+          name: "Harman",
           data: []
         },
         {
-          name: "PQR",
+          name: "Bajaj",
           data: []
         },
         {
           name: "PCYC",
+          data: []
+        },
+        {
+          name: "Ideas to Impacts",
+          data: []
+        },
+        {
+          name: "Syntel",
           data: []
         }
       ]
@@ -137,15 +132,20 @@ class HighChart extends React.Component {
       for (var index in this.projects) {
         var jobLevelL1cnt = 0;
         var jobLevelL2cnt= 0;
+        var jobLevelL3cnt=0;
         this.projects[index].employees.map((emp, index) => {
           if (emp.jobLevel ==="L1") {
             jobLevelL1cnt = jobLevelL1cnt + 1;
           } else if (emp.jobLevel ==="L2") {
             jobLevelL2cnt = jobLevelL2cnt + 1;
+          }else {
+            jobLevelL3cnt = jobLevelL3cnt+1;
           }
         });
         this.state.seriesForJobLevel[index].data.push(jobLevelL1cnt);
         this.state.seriesForJobLevel[index].data.push(jobLevelL2cnt);
+        this.state.seriesForJobLevel[index].data.push(jobLevelL3cnt);
+
       }
 
       console.log("joblevel", this.state.seriesForJobLevel);

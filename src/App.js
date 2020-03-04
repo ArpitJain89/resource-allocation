@@ -11,7 +11,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="container-fluid mt-2">
-        {/* <EmployeeList></EmployeeList> */}
         <BrowserRouter>
           <Route exact path="/" component={EmployeeList} />
           <Route path="/:projectId/employeeAdd/" component={EmployeeAdd} />
