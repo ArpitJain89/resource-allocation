@@ -1,18 +1,10 @@
 import React from "react";
 const resourceData = require("../assets/employees.json");
-class Project extends React.Component {
-            constructor(props){
-                super(props);
-               this.projects = resourceData.projects;
-           }
-
-    
-    render(){
-
+function Project()  {
         return (
           <div>
             <table className="table mt-3">
-              <thead className="thead-light">
+              <thead className="thead-light ">
                 <tr>
                   <th scope="col">Project Id</th>
                   <th scope="col">Project Name</th>
@@ -22,7 +14,7 @@ class Project extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.projects.map((project, index) => {
+                {resourceData.projects.map((project, index) => {
                   return (
                     <tr key={index}>
                       <td> {project.id}</td>
@@ -34,7 +26,7 @@ class Project extends React.Component {
                   );
                 })}
 
-                {this.projects.length ? null : (
+                {resourceData.projects ? null : (
                   <tr className="text-center">
                     <td colSpan="7">No data.</td>
                   </tr>
@@ -43,7 +35,5 @@ class Project extends React.Component {
             </table>
           </div>
         );
-    }
-    
 }
 export default Project

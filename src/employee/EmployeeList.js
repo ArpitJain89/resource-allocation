@@ -8,15 +8,14 @@ class EmployeeList extends React.Component {
   projects = [];
   employees = [];
 
-
   constructor(props) {
     super(props);
     this.state = {
       selectedProjectEmployees: [],
-      id: 0,
+      show: true,
       selectedOption: null,
       editEmployee: {},
-      projectName:''
+      projectName: ""
     };
     this.onClickOfShowAllocation = this.onClickOfShowAllocation.bind(this);
     this.getSelectedproject = this.getSelectedproject.bind(this);
@@ -28,13 +27,15 @@ class EmployeeList extends React.Component {
   }
 
   getSelectedproject(obj) {
-     this.selectedProjectId = obj.id;
-     const selectedProject = this.projects.filter( project => project.id === obj.id );
-     this.selectedProjectEmployees = selectedProject[0].employees;
-     this.setState({
-       selectedOption: obj.projectName,
-       projectName: obj.name
-     });
+    this.selectedProjectId = obj.id;
+    const selectedProject = this.projects.filter(
+      project => project.id === obj.id
+    );
+    this.selectedProjectEmployees = selectedProject[0].employees;
+    this.setState({
+      selectedOption: obj.projectName,
+      projectName: obj.name
+    });
   }
 
   onClickOfShowAllocation() {
@@ -44,10 +45,10 @@ class EmployeeList extends React.Component {
     });
   }
 
-  upDateEmployee(e) {
+  upDateEmployee(emp) {
     this.setState({
-      id: 1,
-      editEmployee: e
+      show: false,
+      editEmployee: emp
     });
   }
 
@@ -65,40 +66,24 @@ class EmployeeList extends React.Component {
     });
 
     this.setState({
-      id: 0
+      show: true
     });
   }
 
   render() {
-    const colourStyles = {backgroundColor: 'white' }
-//   control: styles => ({ ...styles, backgroundColor: 'white' }),
-//   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-//     const color = chroma(data.color);
-//     return {
-//       ...styles,
-//       backgroundColor: isDisabled ? 'red' : blue,
-//       color: '#FFF',
-//       cursor: isDisabled ? 'not-allowed' : 'default',
-//     };
-//   },
-
-// };
-
     return (
       <div className="">
-        {this.state.id == 0 ? (
+        {this.state.show ? (
           <div>
             <div className="row">
               <div className="col-3 thead-light font-weight-bold ">
                 <label>Project Name : {this.state.projectName}</label>
               </div>
               <div className="col-3 ">
-                {" "}
                 <Select
                   className="react-selectcomponent"
                   value={this.state.selectedOption}
                   onChange={this.getSelectedproject}
-                  styles={{ colourStyles }}
                   getOptionLabel={option => `${option.name}`}
                   options={this.projects}
                 />

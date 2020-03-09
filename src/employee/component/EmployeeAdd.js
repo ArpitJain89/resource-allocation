@@ -1,7 +1,6 @@
 import React from "react";
 import Select from "react-select";
 import "../Employee.css";
-// import employee from "../../assets/employees.json"
 const resourceData = require("../../assets/employees.json");
 
 class EmployeeAdd extends React.Component {
@@ -16,7 +15,7 @@ class EmployeeAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption:null,
+      selectedOption: null,
       projectAllocation: 0,
       empAllocation: 0,
       startDate: new Date(),
@@ -29,11 +28,10 @@ class EmployeeAdd extends React.Component {
   }
 
   getEmployeDetails() {
-   this.employees = resourceData.employees 
-    this.projects = resourceData.projects  
-      // sessionStorage.getItem("projects")
-  
-    this.employees = this.employees.filter(emp => emp.allocation != 100);
+    this.employees = resourceData.employees.filter(
+      emp => emp.allocation !== 100
+    );;
+    this.projects = resourceData.projects;
   }
 
   onChangeOfEmployeeForm(event) {
@@ -53,31 +51,6 @@ class EmployeeAdd extends React.Component {
 
   onSubmitOfEmployeeForm(event) {
     event.preventDefault();
-
-    this.projects.forEach(project => {
-      if (project.id === parseInt(this.projectId)) {
-        this.employee = this.employeeDetails;
-        this.employee.allocation =
-          this.employeeDetails.allocation +
-          parseInt(this.state.projectAllocation);
-        this.employees.forEach(emp => {
-          if (emp.id === this.selectedEmployeeId) {
-            emp.allocation = this.employee.allocation;
-          }
-        });
-        this.employee.projectAllocation = parseInt(
-          this.state.projectAllocation
-        );
-        this.employee.startDate = this.state.startDate;
-        this.employee.endDate = this.state.endDate;
-        if (this.state.projectAllocation > 0) {
-          project.employees.push(this.employee);
-        }
-      }
-    });
-
-    sessionStorage.setItem("projects", JSON.stringify(this.projects));
-    sessionStorage.setItem("employees", JSON.stringify(this.employees));
     this.props.history.push("/");
   }
   goBack() {
@@ -86,14 +59,12 @@ class EmployeeAdd extends React.Component {
 
   handleChange(val) {
     this.setState({ selectedOption: val.projectName });
-    const  selectedEmployeeId = parseInt(val.id, 10);
-   if (val.fullName) {
-     this.employeeDetails = this.employees.filter(
-       emp => emp.id === selectedEmployeeId
-     )[0];
-
-   }
-    
+    const selectedEmployeeId = parseInt(val.id, 10);
+    if (val.fullName) {
+      this.employeeDetails = this.employees.filter(
+        emp => emp.id === selectedEmployeeId
+      )[0];
+    }
   }
   render() {
     return (
@@ -109,8 +80,6 @@ class EmployeeAdd extends React.Component {
               Project Name :
             </label>
             <div className="col-md-6">
-             
-
               <Select
                 className="react-selectcomponent"
                 value={this.state.selectedOption}
@@ -126,14 +95,9 @@ class EmployeeAdd extends React.Component {
               Employee Name :
             </label>
             <div className="col-md-6">
-           
-
               <Select
                 className="react-selectcomponent"
                 value={this.state.selectedOption}
-                style={{
-                  boxShadow: "none"
-                }}
                 onChange={this.handleChange.bind(this)}
                 getOptionLabel={option => `${option.fullName}`}
                 options={this.employees}

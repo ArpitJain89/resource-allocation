@@ -9,11 +9,11 @@ import { Route } from "react-router";
 function RouterComponet() {
   return (
     <div>
-      <Route exact path="/" component={Project} />
+      <Route exact path="/" component={HighChart} />
       <Route exact path="/component/EmployeeList" component={EmployeeList} />
       <Route path="/:projectId/employeeAdd/" component={EmployeeAdd} />
       <Route path="/:projectId/employee/:id" component={Employee} />
-      <Route path="/employee/HighChart/" component={HighChart} />
+      <Route path="/employee/Project/" component={Project} />
     </div>
   );
 

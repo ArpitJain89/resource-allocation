@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
 
-import { Redirect, Route } from "react-router";
+import { Redirect} from "react-router";
 class Employee extends React.Component {
   employeeDetails = {};
   constructor(props) {
@@ -23,11 +22,6 @@ class Employee extends React.Component {
     this.getEmployeDetails();
   }
 
-  /**
-   * This function is used to get selected employee
-   * @param {Number} projectId
-   * @param {Number} employeeId
-   */
   getEmployeDetails() {
     this.employeeDetails = this.props.employeeDetails;
     this.setState({
@@ -37,11 +31,6 @@ class Employee extends React.Component {
       projectName: this.props.ProjectName
     });
   }
-  /**
-   *
-   * @param {* } event  used for fetch input value and ID
-   * this method is use to validate allocation filed in input and update state value
-   */
 
   onChangeOfEmployeeForm(event) {
     let propertyName = event.target.name;
@@ -62,11 +51,6 @@ class Employee extends React.Component {
     });
   }
 
-  /**
-   *
-   * @param {*} event used for form value should be display after page refresh
-   * this method submit updated data and update value in project and employee database
-   */
   onSubmitOfEmployeeForm(event) {
     event.preventDefault();
     this.employeeDetails.projectAllocation = this.state.projectAllocation;
@@ -77,12 +61,9 @@ class Employee extends React.Component {
       redirect: 1
     });
   }
-  goBack() {
-    this.props.history.push("/");
-  }
 
   render() {
-    if (this.state.redirect == 1)
+    if (this.state.redirect === 1)
       return (
         <Redirect
           to={{
@@ -91,17 +72,9 @@ class Employee extends React.Component {
         />
       );
     return (
-      <div className="">
-        <div className="card-header text-center font-weight-bold">
-          Update Employee
-        </div>
-        <div className="empBody">
-          <form
-            name="my-form"
-            onSubmit={this.onSubmitOfEmployeeForm}
-            action="success.php"
-            method=""
-          >
+      <div className="row">
+        <div className="col-12">
+          <form onSubmit={this.onSubmitOfEmployeeForm}>
             <div className="form-group row">
               <label className="col-md-4 col-form-label text-md-right">
                 Employee Id :
@@ -111,7 +84,7 @@ class Employee extends React.Component {
                   type="text"
                   id="emp_id"
                   className="form-control"
-                  name="id"
+                  name="empid"
                   value={this.employeeDetails.id}
                   disabled
                 />
@@ -124,9 +97,9 @@ class Employee extends React.Component {
               <div className="col-md-6">
                 <input
                   type="text"
-                  id="emp_id"
+                  id="project_name"
                   className="form-control"
-                  name="id"
+                  name="projectName"
                   value={this.state.projectName}
                   disabled
                 />
@@ -140,9 +113,9 @@ class Employee extends React.Component {
               <div className="col-md-6">
                 <input
                   type="text"
-                  id="emp_id"
+                  id="emp_name"
                   className="form-control"
-                  name="id"
+                  name="employeeName"
                   value={this.employeeDetails.fullName}
                   disabled
                 />
@@ -255,17 +228,11 @@ class Employee extends React.Component {
               <button
                 type="submit"
                 className="btn btn-primary"
-                style={{ margin: "5px" }}
+                
               >
                 Update
               </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                style={{ margin: "5px" }}
-              >
-                <Link to={`/component/EmployeeList`}>Cancel</Link>
-              </button>
+            
             </div>
           </form>
         </div>
