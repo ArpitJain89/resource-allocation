@@ -1,9 +1,13 @@
 import React from "react";
-import   './Employee.css'
+import "./Employee.css";
 import * as Highcharts from "highcharts";
+const resourceData = require("../assets/employees.json");
 class HighChart extends React.Component {
   instance;
   instance1;
+  jobLevelL1cnt = 0;
+  jobLevelL2cnt = 0;
+  jobLevelL3cnt = 0;
 
   optionsForProjectEmp = {
     chart: {
@@ -45,7 +49,7 @@ class HighChart extends React.Component {
       text: "Projects Vs Employee Job Level"
     },
     xAxis: {
-      categories: ["L1", "L2","L3"],
+      categories: ["L1", "L2", "L3"],
       crosshair: true
     },
     yAxis: {
@@ -69,16 +73,12 @@ class HighChart extends React.Component {
         borderWidth: 0
       }
     },
-    series: [
-     
-    ]
+    series: []
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      projectData: [],
-     
       seriesForJobLevel: [
         {
           name: "Harman",
@@ -112,73 +112,49 @@ class HighChart extends React.Component {
     this.getEmployeeDetails();
   }
   getEmployeeDetails() {
-    this.employees = JSON.parse(sessionStorage.getItem("employees"));
-    this.projects = JSON.parse(sessionStorage.getItem("projects"));
+    this.employees = resourceData.employees;
+    this.projects = resourceData.projects;
 
-    if (this.projects.length > 0) {
-      var seriesForProjectEmp = [
-        {
-          colorByPoint: true,
-          size: "100%",
-          innerSize: "60%",
-          data: this.projects.map(function(obj) {
-            return { name: obj.name, y: obj.employees.length };
-          })
-        }
-      ];
-      console.log("series data", seriesForProjectEmp[0].data);
-      this.optionsForProjectEmp.series[0].data = seriesForProjectEmp[0].data;
-
-      for (var index in this.projects) {
-        var jobLevelL1cnt = 0;
-        var jobLevelL2cnt= 0;
-        var jobLevelL3cnt=0;
-        this.projects[index].employees.map((emp, index) => {
-          if (emp.jobLevel ==="L1") {
-            jobLevelL1cnt = jobLevelL1cnt + 1;
-          } else if (emp.jobLevel ==="L2") {
-            jobLevelL2cnt = jobLevelL2cnt + 1;
-          }else {
-            jobLevelL3cnt = jobLevelL3cnt+1;
-          }
-        });
-        this.state.seriesForJobLevel[index].data.push(jobLevelL1cnt);
-        this.state.seriesForJobLevel[index].data.push(jobLevelL2cnt);
-        this.state.seriesForJobLevel[index].data.push(jobLevelL3cnt);
-
+    let seriesForProjectEmp = [
+      {
+        colorByPoint: true,
+        size: "100%",
+        innerSize: "60%",
+        data: this.projects.map(obj=> {
+          return { name: obj.name, y: obj.employees.length };
+        })
       }
+    ];
+    this.optionsForProjectEmp.series[0].data = seriesForProjectEmp[0].data;
 
-      console.log("joblevel", this.state.seriesForJobLevel);
-       this.optionsForProjectEmpJobLevel.series = this.state.seriesForJobLevel;
+    for (let index in this.projects) {
+      this.projects[index].employees.map(emp => {
+        if (emp.jobLevel === "L1") {
+          this.jobLevelL1cnt = this.jobLevelL1cnt + 1;
+        } else if (emp.jobLevel === "L2") {
+          this.jobLevelL2cnt = this.jobLevelL2cnt + 1;
+        } else {
+          this.jobLevelL3cnt = this.jobLevelL3cnt + 1;
+        }
+      });
+      this.state.seriesForJobLevel[index].data.push(this.jobLevelL1cnt);
+      this.state.seriesForJobLevel[index].data.push(this.jobLevelL2cnt);
+      this.state.seriesForJobLevel[index].data.push(this.jobLevelL3cnt);
     }
-
-    console.log("after options.series", this.optionsForProjectEmp.series);
+    this.optionsForProjectEmpJobLevel.series = this.state.seriesForJobLevel;
   }
 
   componentDidMount() {
     this.instance = Highcharts.chart("projEmp-id", this.optionsForProjectEmp);
-    this.instance1 = Highcharts.chart(
-      "projEmpJob-id2",
-      this.optionsForProjectEmpJobLevel
-    );
+    this.instance1 = Highcharts.chart( "projEmpJob-id2", this.optionsForProjectEmpJobLevel);
   }
 
   render() {
     return (
-      <div>
-        <div className="row">
-          <div className="col-sm-6" id="projEmp-id" />
-          <div className="col-sm-6" id="projEmpJob-id2" />
-        </div>
-        <div>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={this.goBack}
-          >
-            Back To Dashboard
-          </button>
-        </div>
+      <div className="row">
+
+        <div className="col-sm-6" id="projEmp-id" />
+        <div className="col-sm-6" id="projEmpJob-id2" />
       </div>
     );
   }

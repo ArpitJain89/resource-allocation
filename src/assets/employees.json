@@ -87,10 +87,10 @@
       "name": "Harman",
       "description": "This project is  related to Harman",
       "clientName": "US",
-      "Unit": "Development",
+      "unit": "Development",
       "startDate": "2010-02-01",
       "endDate": "2010-04-09",
-      "ManagerName": "Pranav",
+      "managerName": "Pranav",
       "employees": [
         {
           "id": 101,
@@ -132,10 +132,10 @@
       "name": "Bajaj",
       "description": "This project related to Bajaj",
       "clientName": "US",
-      "Unit": "Development",
+      "unit": "Development",
       "startDate": "2010-02-01",
       "endDate": "2014-04-02",
-      "ManagerName": "AJAY",
+      "managerName": "AJAY",
       "employees": [
         {
           "id": 102,
@@ -166,10 +166,10 @@
       "name": "PCYC",
       "description": "This project is related to PCYC",
       "clientName": "US",
-      "Unit": "Development",
+      "unit": "Development",
       "startDate": "2010-02-01",
       "endDate": "2014-04-02",
-      "ManagerName": "Ruchi",
+      "managerName": "Ruchi",
       "employees": [
         {
           "id": 102,
@@ -189,10 +189,10 @@
       "name": "Ideas to Impacts",
       "description": "This project is  related to Ideas to Impacts",
       "clientName": "US",
-      "Unit": "Development",
+      "unit": "Development",
       "startDate": "2010-02-01",
       "endDate": "2010-04-09",
-      "ManagerName": "Ashish",
+      "managerName": "Ashish",
       "employees": [
         {
           "id": 109,
@@ -223,10 +223,10 @@
       "name": "Syntel",
       "description": "This project is  related to syntel",
       "clientName": "US",
-      "Unit": "Development",
+      "unit": "Development",
       "startDate": "2010-02-01",
       "endDate": "2010-04-09",
-      "ManagerName": "Diwya",
+      "managerName": "Diwya",
       "employees": [
         {
           "id": 106,

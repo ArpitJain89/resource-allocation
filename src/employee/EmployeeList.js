@@ -1,201 +1,187 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Employee.css";
+import PropTypes from "prop-types";
+import Select from "react-select";
+import Employee from "./component/Employee";
 const resourceData = require("../assets/employees.json");
-
 class EmployeeList extends React.Component {
   projects = [];
-  projectId;
-  SelectedProjectName = "";
-  selectedProjectId = 0;
+  employees = [];
 
-  constructor() {
-    super();
+
+  constructor(props) {
+    super(props);
     this.state = {
       selectedProjectEmployees: [],
-      projectName: ""
+      id: 0,
+      selectedOption: null,
+      editEmployee: {},
+      projectName:''
     };
-
-    this.onChangeOfProjectSelect = this.onChangeOfProjectSelect.bind(this);
     this.onClickOfShowAllocation = this.onClickOfShowAllocation.bind(this);
+    this.getSelectedproject = this.getSelectedproject.bind(this);
   }
 
   componentWillMount() {
-    this.addDataToSessionStoarge();
-  }
-
-  /**
-   *
-   * @param {*} event - Event
-   */
-  onChangeOfProjectSelect(event) {
-    this.selectedProjectId = parseInt(event.target.value, 10);
-    sessionStorage.setItem("projectId", this.selectedProjectId);
-    sessionStorage.setItem("selectedProjectId", this.selectedProjectId);
-    const selectedProjects = this.projects.filter(
-      project => project.id === this.selectedProjectId
-    );
-    this.SelectedProjectName = selectedProjects[0].name;
-    this.selectedProjectEmployees = selectedProjects.length
-      ? selectedProjects[0].employees
-      : {};
-       this.selectedProjectEmployees = this.selectedProjectEmployees.filter(emp=>emp.projectAllocation>0)
-  }
-
-  /**
-   * This is used to show selected employee
-   */
-  onClickOfShowAllocation() {
-    this.upDateState(this.selectedProjectEmployees, this.SelectedProjectName);
-  }
-
-  /**
-   *
-   * @param {*} employeess -employeess is nothing but selected employee
-   * @param {*} projectName -projectName is nothing but selected projectName
-   */
-  upDateState(employeess, projectName) {
-    this.setState({
-      selectedProjectEmployees: employeess,
-      projectName: projectName
-    });
-  }
-  /**
-   * This is used to add date in session storage
-   */
-  addDataToSessionStoarge() {
-    if (!(sessionStorage.getItem("employees") &&
-          sessionStorage.getItem("projects")
-          )
-       ) {
-      sessionStorage.setItem(
-        "employees",
-        JSON.stringify(resourceData.employees)
-      );
-      sessionStorage.setItem("projects", JSON.stringify(resourceData.projects));
-    } else {
-      resourceData.projects = JSON.parse(sessionStorage.getItem("projects"));
-      //  resourceData.projects.forEach(project => {
-      //  return project.employees.filter(emp=>emp.projectAllocation > 0)
-      // });
-
-      if (sessionStorage.getItem("projectId") != null) {
-        this.selectedProjectId = sessionStorage.getItem("projectId");
-        const selectedProjects = resourceData.projects.filter(
-          project => project.id === parseInt(this.selectedProjectId)
-        );
-        this.selectedProjectEmployees = selectedProjects.length
-          ? selectedProjects[0].employees
-          : {};
-          console.log("this.selectedProjectEmployees",this.selectedProjectEmployees);
-          this.selectedProjectEmployees = this.selectedProjectEmployees.filter(emp=>emp.projectAllocation >0);
-           console.log("this.selectedProjectEmployees",this.selectedProjectEmployees);
-        
-        this.upDateState( this.selectedProjectEmployees,selectedProjects[0].name);
-      }
-    }
+    this.employees = resourceData.employees;
     this.projects = resourceData.projects;
   }
 
-  render() {
-    return (
-      <div className="card">
-        <div className="card-header text-center font-weight-bolder">
-          <span className="col-sm-2 offset-4">Resource Allocation</span>
-          <span className="col-2 offset-4">
-            {" "}
-            <Link to={`./employee/HighChart`}>Show Statistics</Link>
-          </span>
-        </div>
-        <div className="card-body view-port-height">
-          <div className="row">
-            
+  getSelectedproject(obj) {
+     this.selectedProjectId = obj.id;
+     const selectedProject = this.projects.filter( project => project.id === obj.id );
+     this.selectedProjectEmployees = selectedProject[0].employees;
+     this.setState({
+       selectedOption: obj.projectName,
+       projectName: obj.name
+     });
+  }
 
-            {/* dropdown form */}
-            <div className="col-3 thead-light ">
-              <label>Project Name: {this.state.projectName}</label>
+  onClickOfShowAllocation() {
+    this.setState({
+      selectedProjectEmployees: this.selectedProjectEmployees,
+      selectedOption: this.state.selectedOption
+    });
+  }
+
+  upDateEmployee(e) {
+    this.setState({
+      id: 1,
+      editEmployee: e
+    });
+  }
+
+  submitUpdatedEmployee(employee) {
+    this.selectedProjectEmployees.forEach(emp => {
+      if (emp.id == employee.id) {
+        emp = employee;
+      }
+    });
+    //employee allocation  update in project
+    this.employees.forEach(emp => {
+      if (emp.id == employee.id) {
+        emp.allocation = employee.allocation;
+      }
+    });
+
+    this.setState({
+      id: 0
+    });
+  }
+
+  render() {
+    const colourStyles = {backgroundColor: 'white' }
+//   control: styles => ({ ...styles, backgroundColor: 'white' }),
+//   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+//     const color = chroma(data.color);
+//     return {
+//       ...styles,
+//       backgroundColor: isDisabled ? 'red' : blue,
+//       color: '#FFF',
+//       cursor: isDisabled ? 'not-allowed' : 'default',
+//     };
+//   },
+
+// };
+
+    return (
+      <div className="">
+        {this.state.id == 0 ? (
+          <div>
+            <div className="row">
+              <div className="col-3 thead-light font-weight-bold ">
+                <label>Project Name : {this.state.projectName}</label>
+              </div>
+              <div className="col-3 ">
+                {" "}
+                <Select
+                  className="react-selectcomponent"
+                  value={this.state.selectedOption}
+                  onChange={this.getSelectedproject}
+                  styles={{ colourStyles }}
+                  getOptionLabel={option => `${option.name}`}
+                  options={this.projects}
+                />
+              </div>
+              <div className="col-3">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={this.onClickOfShowAllocation}
+                >
+                  Show Allocation
+                </button>
+              </div>
             </div>
-            <div className="col-3 ">
-              <select
-                className="form-control"
-                onChange={this.onChangeOfProjectSelect}
-                id="exampleFormControlSelect1"
-              >
-                <option>--Select Project--</option>
-                {this.projects.map(project => (
-                  <option key={project.id} value={project.id}>
-                    {project.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="col-3">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.onClickOfShowAllocation}
-              >
-                Show Allocation
-              </button>
-            </div>
-           
-            <div className="col-2 offset-1">
-              <button type="button" className="btn btn-secondory">
-                <Link to={`${this.selectedProjectId}/employeeAdd`}>
-                  Add Employee
-                </Link>
-              </button>
+            <div className="row">
+              <div className="col-12">
+                {" "}
+                <table className="table mt-3">
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">Employee Id</th>
+                      <th scope="col">Email Id</th>
+                      <th scope="col">Full Name</th>
+                      <th scope="col">Job Level</th>
+                      <th scope="col">Designation</th>
+                      <th scope="col">Allocation</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.selectedProjectEmployees.map(
+                      (employee, index) => {
+                        return (
+                          <tr key={index}>
+                            <td> {employee.id}</td>
+                            <td> {employee.emailId}</td>
+                            <td> {employee.fullName}</td>
+                            <td> {employee.jobLevel}</td>
+                            <td> {employee.designation}</td>
+                            <td> {employee.projectAllocation}%</td>
+                            <td>
+                              <button
+                                onClick={this.upDateEmployee.bind(
+                                  this,
+                                  employee
+                                )}
+                              >
+                                Edit
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+
+                    {this.state.selectedProjectEmployees.length ? null : (
+                      <tr className="text-center">
+                        <td colSpan="7">No data.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-
-          {/* Employee List */}
-
-
-          <table className="table mt-3">
-            <thead className="thead-light">
-              <tr>
-                <th scope="col">Employee Id</th>
-                <th scope="col">Email Id</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Job Level</th>
-                <th scope="col">Designation</th>
-                <th scope="col">Allocation</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.selectedProjectEmployees.map((employee, index) => {
-                return (
-                  <tr key={index}>
-                    <td> {employee.id}</td>
-                    <td> {employee.emailId}</td>
-                    <td> {employee.fullName}</td>
-                    <td> {employee.jobLevel}</td>
-                    <td> {employee.designation}</td>
-                    <td> {employee.projectAllocation}%</td>
-                    <td>
-                      <Link
-                        to={`${this.selectedProjectId}/employee/${employee.id}`}
-                      >
-                        Edit
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-
-              {this.state.selectedProjectEmployees.length ? null : (
-                <tr className="text-center">
-                  <td colSpan="7">No data.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-        >
+        ) : (
+          <div className="card-body view-port-height">
+            <Employee
+              employeeDetails={this.state.editEmployee}
+              ProjectName={this.state.projectName}
+              updateEmployee={this.submitUpdatedEmployee.bind(this)}
+            ></Employee>
+          </div>
+        )}
       </div>
     );
   }
 }
+
+EmployeeList.propTypes = {
+  submitUpdatedEmployee: PropTypes.func,
+  ProjectName: PropTypes.string,
+  employeeDetails: PropTypes.object
+};
 
 export default EmployeeList;
