@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
-import "../Employee.css";
-const resourceData = require("../../assets/employees.json");
+import "./Employee.css";
+const resourceData = require("../assets/employees.json");
 
 class EmployeeAdd extends React.Component {
   employeeDetails = {};
@@ -30,10 +30,10 @@ class EmployeeAdd extends React.Component {
   getEmployeDetails() {
     this.employees = resourceData.employees.filter(
       emp => emp.allocation !== 100
-    );;
+    );
     this.projects = resourceData.projects;
   }
-
+  //for project Allocation validation
   onChangeOfEmployeeForm(event) {
     let propertyName = event.target.name;
     let propertyValue = event.target.value;
@@ -72,8 +72,6 @@ class EmployeeAdd extends React.Component {
         <form
           name="my-form"
           onSubmit={this.onSubmitOfEmployeeForm.bind(this)}
-          action="success.php"
-          method=""
         >
           <div className="form-group row">
             <label className="col-md-4 col-form-label text-md-right">

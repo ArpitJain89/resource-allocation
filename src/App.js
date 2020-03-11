@@ -25,14 +25,14 @@ function App() {
                   </li>
 
                   <li>
-                    <Link to={`/employee/Project/`}>Show Project</Link>
+                    <Link to={`/component/Project`}>Show Project</Link>
                   </li>
                 </ul>
               </nav>
             </div>
             <div className="col-sm-10">
               <div className=" view-port-height">
-                  <RouterComponet></RouterComponet>
+                <RouterComponet></RouterComponet>
               </div>
             </div>
           </div>

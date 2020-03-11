@@ -2,7 +2,7 @@ import React from "react";
 import "./Employee.css";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import Employee from "./component/Employee";
+import Employee from "./Employee";
 const resourceData = require("../assets/employees.json");
 class EmployeeList extends React.Component {
   projects = [];
