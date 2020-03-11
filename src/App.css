@@ -1,5 +1,9 @@
-/* You can add your global css here */
-
-.view-port-height {
-    height: 100vh;
+.custom-section .card{
+    border: none;
+}
+ul.nav.navbar-nav li{
+    padding-bottom: 10px;
+}
+ul.nav.navbar-nav li.active a{
+    color: #2508a5;
 }
