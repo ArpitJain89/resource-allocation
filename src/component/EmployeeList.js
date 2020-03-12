@@ -2,22 +2,23 @@ import React from "react";
 import "./Employee.css";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import Employee from "./Employee";
+import EmployeeEdit from "./EmployeeEdit";
+import EmployeeAdd from "./EmployeeAdd";
 const resourceData = require("../assets/employees.json");
 class EmployeeList extends React.Component {
   projects = [];
   employees = [];
-
+  selectedProjectEmployees = [];
   constructor(props) {
     super(props);
     this.state = {
       selectedProjectEmployees: [],
-      show: true,
+      show: "ShowList",
       selectedOption: null,
       editEmployee: {},
-      projectName: ""
+      projectName: "",
+      showAddbtn: false
     };
-    this.onClickOfShowAllocation = this.onClickOfShowAllocation.bind(this);
     this.getSelectedproject = this.getSelectedproject.bind(this);
   }
 
@@ -41,39 +42,52 @@ class EmployeeList extends React.Component {
   onClickOfShowAllocation() {
     this.setState({
       selectedProjectEmployees: this.selectedProjectEmployees,
-      selectedOption: this.state.selectedOption
+      selectedOption: this.state.selectedOption,
+      showAddbtn: true
     });
   }
 
   upDateEmployee(emp) {
     this.setState({
-      show: false,
+      show: "ShowEdit",
       editEmployee: emp
     });
   }
 
+  addEmployees(newEmp) {
+    this.selectedProjectEmployees.push(newEmp);
+    this.employees.forEach(emp => {
+      if (emp.id == newEmp.id) {
+        emp.allocation = emp.allocation - parseInt(newEmp.projectAllocation);
+      }
+    });
+    this.updateState("ShowList");
+  }
   submitUpdatedEmployee(employee) {
     this.selectedProjectEmployees.forEach(emp => {
       if (emp.id == employee.id) {
-        emp = employee;
+        emp.allocation =
+          100 - (emp.projectAllocation - employee.projectAllocation);
+        emp.projectAllocation = employee.projectAllocation;
       }
     });
-    //employee allocation  update in project
     this.employees.forEach(emp => {
       if (emp.id == employee.id) {
-        emp.allocation = employee.allocation;
+        emp.allocation = employee.allocation - employee.projectAllocation;
       }
     });
-
+    this.updateState("ShowList");
+  }
+  updateState(showComponenet) {
     this.setState({
-      show: true
+      show: showComponenet
     });
   }
 
   render() {
     return (
       <div className="">
-        {this.state.show ? (
+        {this.state.show == "ShowList" ? (
           <div>
             <div className="row">
               <div className="col-3 thead-light font-weight-bold ">
@@ -92,11 +106,22 @@ class EmployeeList extends React.Component {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={this.onClickOfShowAllocation}
+                  onClick={this.onClickOfShowAllocation.bind(this)}
                 >
                   Show Allocation
                 </button>
               </div>
+              {this.state.showAddbtn ? (
+                <div className="col-3">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={this.updateState.bind(this, "ShowAdd")}
+                  >
+                    Add Employee
+                  </button>
+                </div>
+              ) : null}
             </div>
             <div className="row">
               <div className="col-12">
@@ -150,12 +175,26 @@ class EmployeeList extends React.Component {
             </div>
           </div>
         ) : (
-          <div className="card-body view-port-height">
-            <Employee
-              employeeDetails={this.state.editEmployee}
-              ProjectName={this.state.projectName}
-              updateEmployee={this.submitUpdatedEmployee.bind(this)}
-            ></Employee>
+          <div>
+            {this.state.show == "ShowEdit" ? (
+              <div className="card-body view-port-height">
+                <EmployeeEdit
+                  employeeDetails={this.state.editEmployee}
+                  ProjectName={this.state.projectName}
+                  updateEmployee={this.submitUpdatedEmployee.bind(this)}
+                  updateState={this.updateState.bind(this)}
+                ></EmployeeEdit>
+              </div>
+            ) : (
+              <div>
+                <EmployeeAdd
+                  projectName={this.state.projectName}
+                  addEmployees={this.addEmployees.bind(this)}
+                  employees={resourceData.employees}
+                  updateState={this.updateState.bind(this)}
+                ></EmployeeAdd>
+              </div>
+            )}
           </div>
         )}
       </div>

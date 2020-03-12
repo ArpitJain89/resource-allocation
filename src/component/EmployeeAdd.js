@@ -1,39 +1,25 @@
 import React from "react";
 import Select from "react-select";
 import "./Employee.css";
-const resourceData = require("../assets/employees.json");
 
 class EmployeeAdd extends React.Component {
   employeeDetails = {};
-  projects = [];
-  employee = {};
   employees = [];
-  projectId;
-  selectedEmployeeId;
-  empAllocation = 0;
 
   constructor(props) {
     super(props);
     this.state = {
       selectedOption: null,
-      projectAllocation: 0,
-      empAllocation: 0,
-      startDate: new Date(),
-      endDate: new Date()
+      employeeDetails: {}
     };
     this.onChangeOfEmployeeForm = this.onChangeOfEmployeeForm.bind(this);
   }
   componentWillMount() {
-    this.getEmployeDetails();
+     this.employees = this.props.employees.filter(
+       emp => emp.allocation !== 100
+     );
   }
 
-  getEmployeDetails() {
-    this.employees = resourceData.employees.filter(
-      emp => emp.allocation !== 100
-    );
-    this.projects = resourceData.projects;
-  }
-  //for project Allocation validation
   onChangeOfEmployeeForm(event) {
     let propertyName = event.target.name;
     let propertyValue = event.target.value;
@@ -42,48 +28,52 @@ class EmployeeAdd extends React.Component {
       const freeAllocation = 100 - this.employeeDetails.allocation;
       if (allocation > freeAllocation) {
         return;
+      } else {
+        propertyValue = parseInt(propertyValue, 10);
       }
     }
     this.setState({
-      [propertyName]: propertyValue
+      employeeDetails: {
+        ...this.state.employeeDetails,
+        [propertyName]: propertyValue
+      }
     });
   }
 
   onSubmitOfEmployeeForm(event) {
     event.preventDefault();
-    this.props.history.push("/");
-  }
-  goBack() {
-    this.props.history.push("/");
+    this.props.addEmployees(this.state.employeeDetails);
   }
 
   handleChange(val) {
-    this.setState({ selectedOption: val.projectName });
     const selectedEmployeeId = parseInt(val.id, 10);
-    if (val.fullName) {
-      this.employeeDetails = this.employees.filter(
-        emp => emp.id === selectedEmployeeId
-      )[0];
-    }
+    this.employeeDetails = this.employees.filter(
+      emp => emp.id === selectedEmployeeId
+    )[0];
+    this.setState({
+      selectedOption: val.projectName,
+      employeeDetails: val
+    });
+  }
+  backToParent() {
+    this.props.updateState("ShowList");
   }
   render() {
     return (
       <div>
-        <form
-          name="my-form"
-          onSubmit={this.onSubmitOfEmployeeForm.bind(this)}
-        >
+        <form name="my-form" onSubmit={this.onSubmitOfEmployeeForm.bind(this)}>
           <div className="form-group row">
             <label className="col-md-4 col-form-label text-md-right">
               Project Name :
             </label>
             <div className="col-md-6">
-              <Select
-                className="react-selectcomponent"
-                value={this.state.selectedOption}
-                onChange={this.handleChange.bind(this)}
-                getOptionLabel={option => `${option.name}`}
-                options={this.projects}
+              <input
+                type="text"
+                id="emp_id"
+                className="form-control"
+                name="emp_id"
+                value={this.props.projectName}
+                disabled
               />
             </div>
           </div>
@@ -112,7 +102,7 @@ class EmployeeAdd extends React.Component {
                 id="emp_id"
                 className="form-control"
                 name="emp_id"
-                value={this.employeeDetails.id}
+                value={this.state.employeeDetails.id}
                 disabled
               />
             </div>
@@ -128,7 +118,7 @@ class EmployeeAdd extends React.Component {
                 id="email_address"
                 className="form-control"
                 name="emailId"
-                value={this.employeeDetails.emailId}
+                value={this.state.employeeDetails.emailId}
                 disabled
               />
             </div>
@@ -144,7 +134,7 @@ class EmployeeAdd extends React.Component {
                 id="job_level"
                 className="form-control"
                 name="jobLevel"
-                value={this.employeeDetails.jobLevel}
+                value={this.state.employeeDetails.jobLevel}
                 disabled
               />
             </div>
@@ -160,7 +150,7 @@ class EmployeeAdd extends React.Component {
                 id="designation"
                 name="designation"
                 className="form-control"
-                value={this.employeeDetails.designation}
+                value={this.state.employeeDetails.designation}
                 disabled
               />
             </div>
@@ -176,7 +166,7 @@ class EmployeeAdd extends React.Component {
                 type="date"
                 id="startdate"
                 name="startDate"
-                value={this.state.startDate}
+                value={this.state.employeeDetails.startDate}
                 onChange={this.onChangeOfEmployeeForm}
               />
             </div>
@@ -192,7 +182,7 @@ class EmployeeAdd extends React.Component {
                 className="form-control"
                 id="inputPassword"
                 name="endDate"
-                value={this.state.endDate}
+                value={this.state.employeeDetails.endDate}
                 onChange={this.onChangeOfEmployeeForm}
               />
             </div>
@@ -208,7 +198,7 @@ class EmployeeAdd extends React.Component {
                 name="projectAllocation"
                 type="number"
                 className="form-control"
-                value={this.state.projectAllocation}
+                value={this.state.employeeDetails.projectAllocation}
                 onChange={this.onChangeOfEmployeeForm}
               />
               <span>
@@ -218,15 +208,14 @@ class EmployeeAdd extends React.Component {
             </div>
           </div>
 
-          <div className="col-md-6 offset-md-4">
-            <button type="submit" className="btn btn-primary">
+          <div className="row col-md-6 offset-md-4 ">
+            <button type="submit" className="btn btn-primary mr-1">
               Submit
             </button>
             <button
-              type="button"
+              type="submit"
               className="btn btn-primary"
-              style={{ margin: "5px" }}
-              onClick={this.goBack.bind(this)}
+              onClick={this.backToParent.bind(this)}
             >
               Cancel
             </button>
