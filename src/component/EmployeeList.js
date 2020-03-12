@@ -64,10 +64,12 @@ class EmployeeList extends React.Component {
     this.updateState("ShowList");
   }
   submitUpdatedEmployee(employee) {
+     console.log("employee", employee);
     this.selectedProjectEmployees.forEach(emp => {
       if (emp.id == employee.id) {
-        emp.allocation =
-          100 - (emp.projectAllocation - employee.projectAllocation);
+        console.log("emp", emp);
+        emp.allocation =emp.allocation-(emp.projectAllocation-employee.projectAllocation)
+          // 100 - (emp.projectAllocation - employee.projectAllocation);
         emp.projectAllocation = employee.projectAllocation;
       }
     });
@@ -75,6 +77,9 @@ class EmployeeList extends React.Component {
       if (emp.id == employee.id) {
         emp.allocation = employee.allocation - employee.projectAllocation;
       }
+    });
+    this.setState({
+      selectedProjectEmployees: this.selectedProjectEmployees
     });
     this.updateState("ShowList");
   }
