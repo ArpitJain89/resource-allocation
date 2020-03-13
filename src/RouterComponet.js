@@ -13,9 +13,6 @@ function RouterComponet() {
     <div>
       <Route exact path="/" component={HighChart} />
       <Route exact path="/component/EmployeeList" component={EmployeeList} />
-      {/* <Route exact path="/component/Employee" component={Employee} /> */}
-      <Route path="/:projectId/employeeAdd" component={EmployeeAdd} />
-      <Route path="/:projectId/employeeEdit" component={EmployeeEdit} />
       <Route path="/component/Project" component={Project} />
     </div>
   );
