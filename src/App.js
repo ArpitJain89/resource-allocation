@@ -20,10 +20,6 @@ function App() {
                   <li>
                     <Link to={`/component/EmployeeList`}>Show Allocation</Link>
                   </li>
-                  {/* <li>
-                    <Link to={`/component/EmployeeAdd`}>Add Employee</Link>
-                  </li> */}
-
                   <li>
                     <Link to={`/component/Project`}>Show Project</Link>
                   </li>
