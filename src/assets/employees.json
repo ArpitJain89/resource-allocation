@@ -6,7 +6,7 @@
       "fullName": "Shital Thigale",
       "jobLevel": "L2",
       "designation": "Developer",
-      "allocation": 50
+      "allocation": 20
     },
     {
       "id": 102,
@@ -14,7 +14,7 @@
       "fullName": "Priya Sharma",
       "jobLevel": "L1",
       "designation": "QA",
-      "allocation": 100
+      "allocation": 20
     },
     {
       "id": 103,
@@ -22,7 +22,7 @@
       "fullName": "Maya Kale",
       "jobLevel": "L2",
       "designation": "BA",
-      "allocation": 50
+      "allocation": 30
     },
     {
       "id": 104,
@@ -100,19 +100,8 @@
           "designation": "Developer",
           "startDate": "2010-02-01",
           "endDate": "2014-04-02",
-          "allocation": 50,
-          "projectAllocation": 50
-        },
-        {
-          "id": 102,
-          "emailId": "Priya@gmail.com",
-          "fullName": "Priya Sharma",
-          "jobLevel": "L1",
-          "designation": "QA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
-          "allocation": 100,
-          "projectAllocation": 50
+          "allocation": 20,
+          "projectAllocation": 20
         },
         {
           "id": 104,
@@ -145,8 +134,8 @@
           "designation": "QA",
           "startDate": "2010-02-01",
           "endDate": "2014-04-02",
-          "allocation": 100,
-          "projectAllocation": 40
+          "allocation": 20,
+          "projectAllocation": 10
         },
         {
           "id": 103,
@@ -156,8 +145,8 @@
           "designation": "BA",
           "startDate": "2010-02-01",
           "endDate": "2014-04-02",
-          "allocation": 100,
-          "projectAllocation": 50
+          "allocation": 30,
+          "projectAllocation": 30
         }
       ]
     },
@@ -179,7 +168,7 @@
           "designation": "QA",
           "startDate": "2010-02-01",
           "endDate": "2014-04-02",
-          "allocation": 100,
+          "allocation": 20,
           "projectAllocation": 10
         }
       ]
