@@ -10,7 +10,8 @@ class SharedForm extends React.Component {
     super(props);
     this.state = {
       employeeDetails: {},
-      show: true
+      show: true,
+      errors: {}
     };
 
     this.onChangeOfEmployeeForm = this.onChangeOfEmployeeForm.bind(this);
@@ -39,7 +40,8 @@ class SharedForm extends React.Component {
     )[0];
     this.setState({
       selectedOption: val.projectName,
-      employeeDetails: val
+      employeeDetails: val,
+      errors: {}
     });
   }
 
@@ -62,13 +64,42 @@ class SharedForm extends React.Component {
       employeeDetails: {
         ...this.state.employeeDetails,
         [propertyName]: propertyValue
-      }
+      },
+      errors: {}
     });
   }
+  validateForm() {
+    let fields = this.state.employeeDetails;
+    console.log("employeeDetails", this.state.employeeDetails);
 
+    let formIsValid = true;
+    if (!fields["fullName"]) {
+      formIsValid = false;
+      this.state.errors["name"] = " *Please Select Employee Name";
+    }
+    if (!fields["startDate"]) {
+      formIsValid = false;
+      this.state.errors["startDate"] = "*Please enter startDate.";
+    }
+    if (!fields["endDate"]) {
+      formIsValid = false;
+      this.state.errors["endDate"] = "*Please enter endDate.";
+    }
+    if (!fields["projectAllocation"]) {
+      formIsValid = false;
+      this.state.errors["projectAllocation"] =
+        "*Please enter projectAllocation.";
+    }
+    this.setState({
+      errors: this.state.errors
+    });
+    return formIsValid;
+  }
   onSubmitOfEmployeeForm(event) {
     event.preventDefault();
+     if (this.validateForm()) {
     this.props.onSubmitOfEmployeeForm(this.state.employeeDetails);
+     }
   }
   backToParent() {
     this.props.backToParent();
@@ -133,6 +164,7 @@ class SharedForm extends React.Component {
                     options={this.employees}
                   />
                 )}
+                <div className="text-danger">{this.state.errors.name}</div>
               </div>
             </div>
             <div className="form-group row">
@@ -193,6 +225,7 @@ class SharedForm extends React.Component {
                   value={this.state.employeeDetails.startDate}
                   onChange={this.onChangeOfEmployeeForm}
                 />
+                <div className="text-danger">{this.state.errors.startDate}</div>
               </div>
             </div>
             <div className="form-group row">
@@ -208,6 +241,7 @@ class SharedForm extends React.Component {
                   value={this.state.employeeDetails.endDate}
                   onChange={this.onChangeOfEmployeeForm}
                 />
+                <div className="text-danger">{this.state.errors.endDate}</div>
               </div>
             </div>
             <div className="form-group row">
@@ -223,6 +257,9 @@ class SharedForm extends React.Component {
                   value={this.state.employeeDetails.projectAllocation}
                   onChange={this.onChangeOfEmployeeForm}
                 />
+                 <div className="text-danger">
+                  {this.state.errors.projectAllocation}
+                </div>
                 {this.state.show ? (
                   <span className="text ">
                     {" "}
