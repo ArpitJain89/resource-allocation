@@ -42,10 +42,6 @@ class EmployeeJobLevelGraph extends React.Component {
     series: []
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.getEmployeeDetails();
   }
