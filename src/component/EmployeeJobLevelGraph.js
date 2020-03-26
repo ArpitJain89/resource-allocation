@@ -77,8 +77,6 @@ class EmployeeJobLevelGraph extends React.Component {
   getEmployeeDetails() {
     this.employees = this.props.resourceData.employees;
     this.projects = this.props.resourceData.projects;
-
-    
     for (let index in this.projects) {
       this.projects[index].employees.map(emp => {
         if (emp.jobLevel === "L1") {

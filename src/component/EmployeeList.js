@@ -152,11 +152,7 @@ class EmployeeList extends React.Component {
                     Show Allocation
                   </button>
                 ) : (
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    disabled
-                  >
+                  <button type="button" className="btn btn-primary" disabled>
                     Show Allocation
                   </button>
                 )}
@@ -167,8 +163,7 @@ class EmployeeList extends React.Component {
                     type="button"
                     className="btn btn-primary"
                     onClick={this.updateState.bind(this, "ShowAdd")}
-                  >
-                    Add Employee
+                  > Add Employee
                   </button>
                 </div>
               ) : null}
