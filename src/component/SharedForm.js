@@ -1,3 +1,4 @@
+/* eslint-disable react/no-direct-mutation-state */
 import React from "react";
 import Select from "react-select";
 
@@ -18,7 +19,7 @@ class SharedForm extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.callFrom == "empEditForm") {
+    if (this.props.callFrom === "empEditForm") {
       this.setState({
         employeeDetails: this.props.employeeDetails,
         projectName: this.props.ProjectName

@@ -56,7 +56,7 @@ class EmployeeList extends React.Component {
   addEmployees(newEmp) {
     this.selectedProjectEmployees.push(newEmp);
     this.employees.forEach(emp => {
-      if (emp.id == newEmp.id) {
+      if (emp.id === newEmp.id) {
         emp.allocation = emp.allocation - parseInt(newEmp.projectAllocation);
       }
     });
@@ -64,14 +64,14 @@ class EmployeeList extends React.Component {
   }
   submitUpdatedEmployee(employee) {
     this.selectedProjectEmployees.forEach(emp => {
-      if (emp.id == employee.id) {
+      if (emp.id === employee.id) {
         emp.allocation =
           emp.allocation - (emp.projectAllocation - employee.projectAllocation);
         emp.projectAllocation = employee.projectAllocation;
       }
     });
     this.employees.forEach(emp => {
-      if (emp.id == employee.id) {
+      if (emp.id === employee.id) {
         if (employee.allocation - employee.projectAllocation > 100) {
           emp.allocation = employee.allocation - employee.projectAllocation;
         }
@@ -95,6 +95,7 @@ class EmployeeList extends React.Component {
       "fullName",
       "jobLevel",
       "designation",
+      
       "project Allocation",
       "Action"
     ];
@@ -127,7 +128,7 @@ class EmployeeList extends React.Component {
   render() {
     return (
       <div className="">
-        {this.state.show == "ShowList" ? (
+        {this.state.show === "ShowList" ? (
           <div>
             <div className="row">
               <div className="col-3 thead-light font-weight-bold ">
@@ -212,7 +213,7 @@ class EmployeeList extends React.Component {
           </div>
         ) : (
           <div>
-            {this.state.show == "ShowEdit" ? (
+            {this.state.show === "ShowEdit" ? (
               <div>{this.showEditEmployee()}</div>
             ) : (
               <div>{this.showAddEmployee()}</div>
