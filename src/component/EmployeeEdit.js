@@ -1,7 +1,6 @@
 import React from "react";
 import SharedForm from "./SharedForm";
 import "./Employee.css";
-import { Redirect } from "react-router";
 class Employee extends React.Component {
   constructor(props) {
     super(props);

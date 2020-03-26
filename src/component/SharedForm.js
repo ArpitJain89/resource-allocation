@@ -53,7 +53,7 @@ class SharedForm extends React.Component {
       const freeAllocation = 100 - this.state.employeeDetails.allocation;
       if (
         allocation >
-        freeAllocation + this.state.employeeDetails.projectAllocation
+        freeAllocation 
       ) {
         return;
       } else {
@@ -140,7 +140,6 @@ class SharedForm extends React.Component {
                 />
               </div>
             </div>
-
             <div className="form-group row">
               <label className="col-md-4 col-form-label text-md-right">
                 Employee Name :
@@ -261,11 +260,10 @@ class SharedForm extends React.Component {
                   {this.state.errors.projectAllocation}
                 </div>
                 {this.state.show ? (
-                  <span className="text ">
+                   <span className="text ">
                     {" "}
-                    Note *: Employee can be allocated up to{" "}
-                    {this.props.employeeDetails.projectAllocation +
-                      (100 - this.props.employeeDetails.allocation)}{" "}
+                    Note *: Employee  
+                    {this.state.employeeDetails.allocation } % is allocated for other project
                   </span>
                 ) : (
                   <span>

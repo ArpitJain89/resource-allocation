@@ -1,6 +1,5 @@
 import React from "react";
 import "./Employee.css";
-import PropTypes from "prop-types";
 import Select from "react-select";
 import EmployeeEdit from "./EmployeeEdit";
 import EmployeeAdd from "./EmployeeAdd";
@@ -66,13 +65,16 @@ class EmployeeList extends React.Component {
   submitUpdatedEmployee(employee) {
     this.selectedProjectEmployees.forEach(emp => {
       if (emp.id == employee.id) {
-        emp.allocation =emp.allocation-(emp.projectAllocation-employee.projectAllocation)
+        emp.allocation =
+          emp.allocation - (emp.projectAllocation - employee.projectAllocation);
         emp.projectAllocation = employee.projectAllocation;
       }
     });
     this.employees.forEach(emp => {
       if (emp.id == employee.id) {
-        emp.allocation = employee.allocation - employee.projectAllocation;
+        if (employee.allocation - employee.projectAllocation > 100) {
+          emp.allocation = employee.allocation - employee.projectAllocation;
+        }
       }
     });
     this.setState({
@@ -86,6 +88,42 @@ class EmployeeList extends React.Component {
     });
   }
 
+  getHeader() {
+    var keys = [
+      "id",
+      "emailId",
+      "fullName",
+      "jobLevel",
+      "designation",
+      "project Allocation",
+      "Action"
+    ];
+    if (keys.length != null) {
+      return keys.map(key => {
+        return <th key={key}>{key.toUpperCase()}</th>;
+      });
+    }
+  }
+  showEditEmployee() {
+    return (
+      <EmployeeEdit
+        employeeDetails={this.state.editEmployee}
+        ProjectName={this.state.projectName}
+        updateEmployee={this.submitUpdatedEmployee.bind(this)}
+        updateState={this.updateState.bind(this)}
+      ></EmployeeEdit>
+    );
+  }
+  showAddEmployee() {
+    return (
+      <EmployeeAdd
+        projectName={this.state.projectName}
+        addEmployees={this.addEmployees.bind(this)}
+        employees={resourceData.employees}
+        updateState={this.updateState.bind(this)}
+      ></EmployeeAdd>
+    );
+  }
   render() {
     return (
       <div className="">
@@ -105,13 +143,23 @@ class EmployeeList extends React.Component {
                 />
               </div>
               <div className="col-3">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={this.onClickOfShowAllocation.bind(this)}
-                >
-                  Show Allocation
-                </button>
+                {this.selectedProjectEmployees.length > 0 ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={this.onClickOfShowAllocation.bind(this)}
+                  >
+                    Show Allocation
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    disabled
+                  >
+                    Show Allocation
+                  </button>
+                )}
               </div>
               {this.state.showAddbtn ? (
                 <div className="col-3">
@@ -130,15 +178,7 @@ class EmployeeList extends React.Component {
                 {" "}
                 <table className="table mt-3">
                   <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Employee Id</th>
-                      <th scope="col">Email Id</th>
-                      <th scope="col">Full Name</th>
-                      <th scope="col">Job Level</th>
-                      <th scope="col">Designation</th>
-                      <th scope="col">Allocation</th>
-                      <th scope="col">Actions</th>
-                    </tr>
+                    <tr>{this.getHeader()}</tr>
                   </thead>
                   <tbody>
                     {this.state.selectedProjectEmployees.map(
@@ -165,7 +205,6 @@ class EmployeeList extends React.Component {
                         );
                       }
                     )}
-
                     {this.state.selectedProjectEmployees.length ? null : (
                       <tr className="text-center">
                         <td colSpan="7">No data.</td>
@@ -179,23 +218,9 @@ class EmployeeList extends React.Component {
         ) : (
           <div>
             {this.state.show == "ShowEdit" ? (
-              <div className="card-body view-port-height">
-                <EmployeeEdit
-                  employeeDetails={this.state.editEmployee}
-                  ProjectName={this.state.projectName}
-                  updateEmployee={this.submitUpdatedEmployee.bind(this)}
-                  updateState={this.updateState.bind(this)}
-                ></EmployeeEdit>
-              </div>
+              <div>{this.showEditEmployee()}</div>
             ) : (
-              <div>
-                <EmployeeAdd
-                  projectName={this.state.projectName}
-                  addEmployees={this.addEmployees.bind(this)}
-                  employees={resourceData.employees}
-                  updateState={this.updateState.bind(this)}
-                ></EmployeeAdd>
-              </div>
+              <div>{this.showAddEmployee()}</div>
             )}
           </div>
         )}
@@ -203,11 +228,5 @@ class EmployeeList extends React.Component {
     );
   }
 }
-
-EmployeeList.propTypes = {
-  submitUpdatedEmployee: PropTypes.func,
-  ProjectName: PropTypes.string,
-  employeeDetails: PropTypes.object
-};
 
 export default EmployeeList;

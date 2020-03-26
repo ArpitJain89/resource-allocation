@@ -1,39 +1,38 @@
 import React from "react";
-const resourceData = require("../assets/employees.json");
-function Project()  {
-        return (
-          <div>
-            <table className="table mt-3">
-              <thead className="thead-light ">
-                <tr>
-                  <th scope="col">Project Id</th>
-                  <th scope="col">Project Name</th>
-                  <th scope="col">Client Name</th>
-                  <th scope="col">Unit</th>
-                  <th scope="col">Manager Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {resourceData.projects.map((project, index) => {
-                  return (
-                    <tr key={index}>
-                      <td> {project.id}</td>
-                      <td> {project.name}</td>
-                      <td> {project.clientName}</td>
-                      <td> {project.unit}</td>
-                      <td> {project.managerName}</td>
-                    </tr>
-                  );
-                })}
+import Table from "./Table";
 
-                {resourceData.projects ? null : (
-                  <tr className="text-center">
-                    <td colSpan="7">No data.</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        );
+const resourceData = require("../assets/employees.json");
+
+class Project extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      headers: []
+    };
+  }
+  componentWillMount() {
+    var keys = [
+      "id",
+      "name",
+      "clientName",
+      "managerName",
+      "unit",
+      "endDate",
+      "startDate"
+    ];
+    this.setState({
+      data: resourceData.projects,
+      keys: keys
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Table {...this.state}></Table>
+      </div>
+    );
+  }
 }
-export default Project
+export default Project;
