@@ -1,7 +1,6 @@
 import React from "react";
 import * as Highcharts from "highcharts";
 
-
 class EmployeeJobLevelGraph extends React.Component {
   instance;
   jobLevelL1cnt = 0;
@@ -45,63 +44,45 @@ class EmployeeJobLevelGraph extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      seriesForJobLevel: [
-        {
-          name: "Harman",
-          data: []
-        },
-        {
-          name: "Bajaj",
-          data: []
-        },
-        {
-          name: "PCYC",
-          data: []
-        },
-        {
-          name: "Ideas to Impacts",
-          data: []
-        },
-        {
-          name: "Syntel",
-          data: []
-        }
-      ]
-    };
   }
-  
+
   componentWillMount() {
     this.getEmployeeDetails();
   }
   getEmployeeDetails() {
     this.employees = this.props.resourceData.employees;
     this.projects = this.props.resourceData.projects;
+
+    let seriesForJobLevel = this.projects.map(obj => {
+      return { name: obj.name, data: [] };
+    });
+
     for (let index in this.projects) {
       this.projects[index].employees.map(emp => {
         if (emp.jobLevel === "L1") {
-        return  this.jobLevelL1cnt = this.jobLevelL1cnt + 1;
+          return (this.jobLevelL1cnt = this.jobLevelL1cnt + 1);
         } else if (emp.jobLevel === "L2") {
-        return (this.jobLevelL2cnt = this.jobLevelL2cnt + 1);
+          return (this.jobLevelL2cnt = this.jobLevelL2cnt + 1);
         } else {
-         return this.jobLevelL3cnt = this.jobLevelL3cnt + 1;
+          return (this.jobLevelL3cnt = this.jobLevelL3cnt + 1);
         }
       });
-      this.state.seriesForJobLevel[index].data.push(this.jobLevelL1cnt);
-      this.state.seriesForJobLevel[index].data.push(this.jobLevelL2cnt);
-      this.state.seriesForJobLevel[index].data.push(this.jobLevelL3cnt);
+      seriesForJobLevel[index].data.push(this.jobLevelL1cnt);
+      seriesForJobLevel[index].data.push(this.jobLevelL2cnt);
+      seriesForJobLevel[index].data.push(this.jobLevelL3cnt);
     }
-    this.optionsForProjectEmpJobLevel.series = this.state.seriesForJobLevel;
+    this.optionsForProjectEmpJobLevel.series = seriesForJobLevel;
   }
 
   componentDidMount() {
-    this.instance= Highcharts.chart("projEmpJob-id2",this.optionsForProjectEmpJobLevel);
+    this.instance = Highcharts.chart(
+      "projEmpJob-id2",
+      this.optionsForProjectEmpJobLevel
+    );
   }
 
   render() {
-    return (
-        <div className="col-sm-6" id="projEmpJob-id2" />
-    );
+    return <div className="col-sm-6" id="projEmpJob-id2" />;
   }
 }
 
