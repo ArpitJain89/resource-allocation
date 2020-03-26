@@ -18,8 +18,8 @@ class Project extends React.Component {
       "clientName",
       "managerName",
       "unit",
+      "startDate" ,
       "endDate",
-      "startDate"
     ];
     this.setState({
       data: resourceData.projects,

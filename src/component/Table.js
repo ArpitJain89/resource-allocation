@@ -16,8 +16,8 @@ class Table extends React.Component {
   }
 
   getRowsData() {
-    var items = this.props.data;
-    var keys = this.props.keys;
+    let items = this.props.data;
+    let keys = this.props.keys;
     return items.map((row, index) => {
       return (
         <tr key={index}>

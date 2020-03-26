@@ -1,5 +1,4 @@
 import React from "react";
-
 import Select from "react-select";
 
 class SharedForm extends React.Component {
@@ -33,6 +32,7 @@ class SharedForm extends React.Component {
       });
     }
   }
+
   handleChange(val) {
     const selectedEmployeeId = parseInt(val.id, 10);
     this.employeeDetails = this.employees.filter(
@@ -51,10 +51,7 @@ class SharedForm extends React.Component {
     if (propertyName === "projectAllocation") {
       const allocation = parseInt(propertyValue, 10);
       const freeAllocation = 100 - this.state.employeeDetails.allocation;
-      if (
-        allocation >
-        freeAllocation 
-      ) {
+      if (allocation > freeAllocation) {
         return;
       } else {
         propertyValue = parseInt(propertyValue);
@@ -79,16 +76,16 @@ class SharedForm extends React.Component {
     }
     if (!fields["startDate"]) {
       formIsValid = false;
-      this.state.errors["startDate"] = "*Please enter startDate.";
+      this.state.errors["startDate"] = "*Please enter StartDate.";
     }
     if (!fields["endDate"]) {
       formIsValid = false;
-      this.state.errors["endDate"] = "*Please enter endDate.";
+      this.state.errors["endDate"] = "*Please enter EndDate.";
     }
     if (!fields["projectAllocation"]) {
       formIsValid = false;
       this.state.errors["projectAllocation"] =
-        "*Please enter projectAllocation.";
+        "*Please enter Project Allocation.";
     }
     this.setState({
       errors: this.state.errors
@@ -97,9 +94,9 @@ class SharedForm extends React.Component {
   }
   onSubmitOfEmployeeForm(event) {
     event.preventDefault();
-     if (this.validateForm()) {
-    this.props.onSubmitOfEmployeeForm(this.state.employeeDetails);
-     }
+    if (this.validateForm()) {
+      this.props.onSubmitOfEmployeeForm(this.state.employeeDetails);
+    }
   }
   backToParent() {
     this.props.backToParent();
@@ -112,7 +109,7 @@ class SharedForm extends React.Component {
           <form onSubmit={this.onSubmitOfEmployeeForm}>
             <div className="form-group row">
               <label className="col-md-4 col-form-label text-md-right">
-                project Name :
+                Project Name :
               </label>
               <div className="col-md-6">
                 <input
@@ -121,21 +118,6 @@ class SharedForm extends React.Component {
                   className="form-control"
                   name="projectName"
                   value={this.props.projectName}
-                  disabled
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <label className="col-md-4 col-form-label text-md-right">
-                Employee Id :
-              </label>
-              <div className="col-md-6">
-                <input
-                  type="text"
-                  id="emp_id"
-                  className="form-control"
-                  name="empid"
-                  value={this.state.employeeDetails.id}
                   disabled
                 />
               </div>
@@ -164,6 +146,21 @@ class SharedForm extends React.Component {
                   />
                 )}
                 <div className="text-danger">{this.state.errors.name}</div>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-md-4 col-form-label text-md-right">
+                Employee Id :
+              </label>
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  id="emp_id"
+                  className="form-control"
+                  name="empid"
+                  value={this.state.employeeDetails.id}
+                  disabled
+                />
               </div>
             </div>
             <div className="form-group row">
@@ -256,14 +253,15 @@ class SharedForm extends React.Component {
                   value={this.state.employeeDetails.projectAllocation}
                   onChange={this.onChangeOfEmployeeForm}
                 />
-                 <div className="text-danger">
+                <div className="text-danger">
                   {this.state.errors.projectAllocation}
                 </div>
                 {this.state.show ? (
-                   <span className="text ">
+                  <span className="text ">
                     {" "}
-                    Note *: Employee  
-                    {this.state.employeeDetails.allocation } % is allocated for other project
+                    Note *: Employee
+                    {this.state.employeeDetails.allocation} % is allocated for
+                    other project
                   </span>
                 ) : (
                   <span>
