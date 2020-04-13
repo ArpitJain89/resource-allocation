@@ -1,222 +1,249 @@
 import React from "react";
 import "./Employee.css";
 import Select from "react-select";
-import EmployeeEdit from "./EmployeeEdit";
-import EmployeeAdd from "./EmployeeAdd";
-const resourceData = require("../assets/employees.json");
+import EmpList from "./empList";
+import EmpEdit from "./empEdit";
+import EmpAdd from "./empAdd";
+import { EmployeeConsumer } from "../context/EmployeeContext";
 class EmployeeList extends React.Component {
-  projects = [];
-  employees = [];
   selectedProjectEmployees = [];
   constructor(props) {
     super(props);
     this.state = {
+      resourceData: {
+        employees: [],
+        projects: []
+      },
       selectedProjectEmployees: [],
-      show: "ShowList",
-      selectedOption: null,
-      editEmployee: {},
-      projectName: "",
-      showAddbtn: false
+      employee: {},
+      show: "list",
+      errors: {},
+      selectedOption: null
     };
-    this.getSelectedproject = this.getSelectedproject.bind(this);
   }
 
-  componentWillMount() {
-    this.employees = resourceData.employees;
-    this.projects = resourceData.projects;
-  }
-
-  getSelectedproject(obj) {
-    this.selectedProjectId = obj.id;
-    const selectedProject = this.projects.filter(
-      project => project.id === obj.id
-    );
-    this.selectedProjectEmployees = selectedProject[0].employees;
-    this.setState({
-      selectedOption: obj.projectName,
-      projectName: obj.name
-    });
-  }
-
-  onClickOfShowAllocation() {
-    this.setState({
-      selectedProjectEmployees: this.selectedProjectEmployees,
-      selectedOption: this.state.selectedOption,
-      showAddbtn: true
-    });
-  }
-
-  upDateEmployee(emp) {
-    this.setState({
-      show: "ShowEdit",
-      editEmployee: emp
-    });
-  }
-
-  addEmployees(newEmp) {
-    this.selectedProjectEmployees.push(newEmp);
-    this.employees.forEach(emp => {
-      if (emp.id === newEmp.id) {
-        emp.allocation = emp.allocation - parseInt(newEmp.projectAllocation);
+  submitFromList(e) {
+    e.preventDefault();
+    if (this.validateForm()) {
+      const { employee } = { ...this.state };
+      if (this.state.show !== "edit") {
+        this.selectedProjectEmployees = [
+          ...this.state.selectedProjectEmployees,
+          employee
+        ];
+        this.projects = this.state.projects.map(x => {
+          if (x.id === this.projectId) {
+            x.employees = this.selectedProjectEmployees;
+          }
+          return x;
+        });
+      } else {
+        this.selectedProjectEmployees = this.state.selectedProjectEmployees.map(
+          x => {
+            if (x.id === employee.id) {
+              return employee;
+            }
+            return x;
+          }
+        );
       }
-    });
-    this.updateState("ShowList");
-  }
-  submitUpdatedEmployee(employee) {
-    this.selectedProjectEmployees.forEach(emp => {
-      if (emp.id === employee.id) {
-        emp.allocation =
-          emp.allocation - (emp.projectAllocation - employee.projectAllocation);
-        emp.projectAllocation = employee.projectAllocation;
-      }
-    });
-    this.employees.forEach(emp => {
-      if (emp.id === employee.id) {
-        if (employee.allocation - employee.projectAllocation > 100) {
-          emp.allocation = employee.allocation - employee.projectAllocation;
-        }
-      }
-    });
-    this.setState({
-      selectedProjectEmployees: this.selectedProjectEmployees
-    });
-    this.updateState("ShowList");
-  }
-  updateState(showComponenet) {
-    this.setState({
-      show: showComponenet
-    });
-  }
-
-  getHeader() {
-    var keys = [
-      "id",
-      "emailId",
-      "fullName",
-      "jobLevel",
-      "designation",
-      
-      "project Allocation",
-      "Action"
-    ];
-    if (keys.length != null) {
-      return keys.map(key => {
-        return <th key={key}>{key.toUpperCase()}</th>;
+      this.state.resourceData.employees = this.state.employees;
+      this.state.resourceData.projects = this.state.projects;
+      this.update = true;
+      this.setState({
+      ...this.state.resourceData,
+        selectedProjectEmployees: this.selectedProjectEmployees,
+        show: "list"
       });
     }
   }
-  showEditEmployee() {
-    return (
-      <EmployeeEdit
-        employeeDetails={this.state.editEmployee}
-        ProjectName={this.state.projectName}
-        updateEmployee={this.submitUpdatedEmployee.bind(this)}
-        updateState={this.updateState.bind(this)}
-      ></EmployeeEdit>
-    );
+
+  getSelectedproject(obj) {
+    this.projectId = obj.id;
+    this.selectedProjectEmployees = obj.employees;
+    this.projectName = obj.name;
   }
-  showAddEmployee() {
-    return (
-      <EmployeeAdd
-        projectName={this.state.projectName}
-        addEmployees={this.addEmployees.bind(this)}
-        employees={resourceData.employees}
-        updateState={this.updateState.bind(this)}
-      ></EmployeeAdd>
-    );
+
+  getSelectedEmployee(employee) {
+    this.setState({
+      employee,
+      selectedOption: this.selectedOption,
+      errors: {}
+    });
+  }
+
+  onChangeOfEmployeeForm(event) {
+    let propertyName = event.target.name;
+    let propertyValue = event.target.value;
+    if (propertyName === "projectAllocation") {
+      const allocation = parseInt(propertyValue, 10);
+      const freeAllocation = 100 - this.state.employee.allocation;
+      if (allocation > freeAllocation) {
+        return;
+      } else {
+        propertyValue = parseInt(propertyValue);
+      }
+    }
+    this.setState({
+      employee: {
+        ...this.state.employee,
+        [propertyName]: propertyValue
+      },
+      errors: {}
+    });
+  }
+  validateForm() {
+    let fields = this.state.employee;
+    const { errors } = this.state;
+
+    let formIsValid = true;
+    if (!fields["fullName"]) {
+      formIsValid = false;
+      errors["name"] = " *Please Select Employee Name";
+    }
+    if (!fields["startDate"]) {
+      formIsValid = false;
+      errors["startDate"] = "*Please enter StartDate.";
+    }
+    if (!fields["endDate"]) {
+      formIsValid = false;
+      errors["endDate"] = "*Please enter EndDate.";
+    }
+    if (!fields["projectAllocation"]) {
+      formIsValid = false;
+      errors["projectAllocation"] = "*Please enter Project Allocation.";
+    }
+    this.setState({
+      errors: this.state.errors
+    });
+    return formIsValid;
+  }
+  cancelEvent = () => {
+    this.setState({ show: "list", errors: {} });
+  };
+  
+  componentDidMount() {
+    this.resourceData = JSON.parse(this.resourceData);
+    const { employees, projects } = this.resourceData;
+    this.setState({
+      resourceData:this.resourceData,
+      employees,
+      projects
+    });
   }
   render() {
+    const data = [
+      this.state.employees,
+      this.state.employee,
+      this.state.selectedOption,
+      this.projectName,
+      this.state.errors
+    ];
+
     return (
-      <div className="">
-        {this.state.show === "ShowList" ? (
+      <div>
+        <div>
+          <EmployeeConsumer>
+            {value => {
+              this.resourceData = JSON.stringify(value.theme);
+              if (this.update) {
+                value.changeTheme(this.state.resourceData);
+              }
+            }}
+          </EmployeeConsumer>
+        </div>
+        {this.state.show === "list" ? (
           <div>
             <div className="row">
               <div className="col-3 thead-light font-weight-bold ">
-                <label>Project Name : {this.state.projectName}</label>
+                <label>Project Name : {this.projectName}</label>
               </div>
               <div className="col-3 ">
                 <Select
                   className="react-selectcomponent"
-                  value={this.state.selectedOption}
-                  onChange={this.getSelectedproject}
+                  value={
+                    this.state.selectedOption
+                      ? this.state.selectedOption
+                      : this.selectedOption
+                  }
+                  onChange={id => {
+                    this.getSelectedproject(id);
+                  }}
                   getOptionLabel={option => `${option.name}`}
-                  options={this.projects}
+                  options={this.state.projects}
                 />
               </div>
               <div className="col-3">
-                {this.selectedProjectEmployees.length > 0 ? (
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={this.onClickOfShowAllocation.bind(this)}
-                  >
-                    Show Allocation
-                  </button>
-                ) : (
-                  <button type="button" className="btn btn-primary" disabled>
-                    Show Allocation
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    this.setState({
+                      selectedProjectEmployees: this.selectedProjectEmployees,
+                      selectedOption: this.selectedOption
+                    });
+                    // this.onClickOfShowAllocation();
+                  }}
+                >
+                  Show Allocation
+                </button>
               </div>
-              {this.state.showAddbtn ? (
-                <div className="col-3">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={this.updateState.bind(this, "ShowAdd")}
-                  > Add Employee
-                  </button>
-                </div>
-              ) : null}
-            </div>
-            <div className="row">
-              <div className="col-12">
-                {" "}
-                <table className="table mt-3">
-                  <thead className="thead-light">
-                    <tr>{this.getHeader()}</tr>
-                  </thead>
-                  <tbody>
-                    {this.state.selectedProjectEmployees.map(
-                      (employee, index) => {
-                        return (
-                          <tr key={index}>
-                            <td> {employee.id}</td>
-                            <td> {employee.emailId}</td>
-                            <td> {employee.fullName}</td>
-                            <td> {employee.jobLevel}</td>
-                            <td> {employee.designation}</td>
-                            <td> {employee.projectAllocation}%</td>
-                            <td>
-                              <button
-                                onClick={this.upDateEmployee.bind(
-                                  this,
-                                  employee
-                                )}
-                              >
-                                Edit
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      }
-                    )}
-                    {this.state.selectedProjectEmployees.length ? null : (
-                      <tr className="text-center">
-                        <td colSpan="7">No data.</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+              <div className="col-3">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    this.setState({ show: "add", employee: {} });
+                  }}
+                >
+                  Add Employee
+                </button>
               </div>
             </div>
+
+            <EmpList
+              selectedProjectEmployees={this.state.selectedProjectEmployees}
+              upDateEmployee={(employee, show) => {
+                this.setState({
+                  show,
+                  employee
+                });
+              }}
+            />
           </div>
         ) : (
           <div>
-            {this.state.show === "ShowEdit" ? (
-              <div>{this.showEditEmployee()}</div>
+            {this.state.show === "edit" ? (
+              <EmpEdit
+                employee={this.state.employee}
+                errors={this.state.errors}
+                projectName={this.projectName}
+                submitFromList={event => {
+                  this.submitFromList(event);
+                }}
+                onChangeOfEmployeeForm={e => {
+                  this.onChangeOfEmployeeForm(e);
+                }}
+                cancel={() => {
+                  this.cancelEvent();
+                }}
+              />
             ) : (
-              <div>{this.showAddEmployee()}</div>
+              <EmpAdd
+                data={data}
+                selectEmployee={emp => {
+                  this.getSelectedEmployee(emp);
+                }}
+                onChangeOfEmployeeForm={e => {
+                  this.onChangeOfEmployeeForm(e);
+                }}
+                submitFromList={event => {
+                  this.submitFromList(event);
+                }}
+                cancel={() => {
+                  this.cancelEvent();
+                }}
+              />
             )}
           </div>
         )}

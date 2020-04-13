@@ -42,9 +42,7 @@ class EmployeeJobLevelGraph extends React.Component {
     series: []
   };
 
-  componentWillMount() {
-    this.getEmployeeDetails();
-  }
+  
   getEmployeeDetails() {
     this.employees = this.props.resourceData.employees;
     this.projects = this.props.resourceData.projects;
@@ -54,6 +52,9 @@ class EmployeeJobLevelGraph extends React.Component {
     });
 
     for (let index in this.projects) {
+      this.jobLevelL1cnt = 0;
+      this.jobLevelL2cnt = 0;
+      this.jobLevelL3cnt = 0;
       this.projects[index].employees.map(emp => {
         if (emp.jobLevel === "L1") {
           return (this.jobLevelL1cnt = this.jobLevelL1cnt + 1);
@@ -71,6 +72,7 @@ class EmployeeJobLevelGraph extends React.Component {
   }
 
   componentDidMount() {
+    this.getEmployeeDetails();
     this.instance = Highcharts.chart(
       "projEmpJob-id2",
       this.optionsForProjectEmpJobLevel

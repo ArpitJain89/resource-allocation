@@ -30,9 +30,7 @@ class EmployeeCountGraph extends React.Component {
     ]
   };
  
-  componentWillMount() {
-    this.getEmployeeDetails();
-  }
+  
   getEmployeeDetails() {
     this.employees = this.props.resourceData.employees;
     this.projects = this.props.resourceData.projects;
@@ -52,6 +50,7 @@ class EmployeeCountGraph extends React.Component {
 }
 
   componentDidMount(){
+    this.getEmployeeDetails()
     this.instance = Highcharts.chart("projEmp-id", this.optionsForProjectEmp);
   }
 

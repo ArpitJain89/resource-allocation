@@ -1,22 +1,16 @@
-import React from "react";
+
+import React, { useContext } from "react";
 import EmployeeCountGraph from "./EmployeeCountGraph";
 import EmployeeJobLevelGraph from "./EmployeeJobLevelGraph";
+import { EmployeeConsumer } from "../context/EmployeeContext";
 
-const resourceData = require("../assets/employees.json");
-class HighChart extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      resourceData
-    };
-  }
-  render() {
+  const HighChart = () => {
+    const { theme } = useContext(EmployeeConsumer);
     return (
-        <div className="row">
-          <EmployeeCountGraph resourceData={this.state.resourceData} />
-          <EmployeeJobLevelGraph resourceData={this.state.resourceData} />
-        </div>
+      <div className="row">
+        <EmployeeCountGraph resourceData={theme} />
+        <EmployeeJobLevelGraph resourceData={theme} />
+      </div>
     );
-  }
-}
+  };
 export default HighChart;
