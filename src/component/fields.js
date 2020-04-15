@@ -1,59 +1,34 @@
-import TextInput from "../../components/TextInput";
-import SelectInput from "../../components/SelectInput";
+// import TextInput from "../../components/TextInput";
 
+import TextInput from "../component/TextInput";
 const fields = [
   {
-    name: "productName",
-    label: "Product Name",
+    name: "projectName",
+    label: "project Name",
     component: TextInput,
-    validate: value => {
-      let error;
-      if (!value) {
-        error = "Required";
-      }
-      return error;
-    },
+
     value: ""
   },
   {
-    name: "productPrice",
-    label: "Product Price",
+    name: "employeeName",
+    label: "Employee Name",
     component: TextInput,
-    validate: value => {
-      let error;
-      if (!value) {
-        error = "Required";
-      }
-      return error;
-    },
+
     value: "0"
   },
   {
-    name: "manufacturer",
-    label: "Manufacturer",
-    component: SelectInput,
-    options: [
-      {
-        value: "Apple",
-        text: "Apple"
-      },
-      {
-        value: "Samsung",
-        text: "Samsung"
-      },
-      {
-        value: "Xiomi",
-        text: "Xiomi"
-      }
-    ],
-    validate: value => {
-      let error;
-      if (!value) {
-        error = "Required";
-      }
-      return error;
-    },
-    value: ""
+    name: "employeeId",
+    label: "Employee Id",
+    component: TextInput,
+
+    value: "0"
+  },
+  {
+    name: "emailId",
+    label: "Email Address",
+    component: TextInput,
+
+    value: "0"
   }
 ];
 
