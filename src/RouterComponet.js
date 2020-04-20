@@ -1,16 +1,15 @@
 import React from "react";
-import "./App.css";
-import EmployeeList from "./component/EmployeeList";
-import Project from "./component/Project";
-import HighChart from "./component/HighChart";
-import { Route } from "react-router";
+import  EmployeeList  from "./component/Employee/index";
+import Project from "./component/Project/index";
+import HighChart from "./component/HighChart/index";
+import { Route, Switch } from "react-router";
 function RouterComponet() {
   return (
-    <div>
+    <Switch>
       <Route exact path="/" component={HighChart} />
-      <Route exact path="/component/EmployeeList" component={EmployeeList} />
+      <Route exact path="/Component/Employee" component={EmployeeList} />
       <Route path="/component/Project" component={Project} />
-    </div>
+    </Switch>
   );
 
 };

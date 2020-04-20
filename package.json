@@ -7,10 +7,14 @@
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
+    "moment": "^2.24.0",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
+    "react-date-picker": "^8.0.1",
+    "react-datepicker": "^2.14.1",
     "react-dom": "^16.12.0",
     "react-highcharts": "^16.1.0",
+    "react-moment": "^0.9.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-select": "^3.0.8"
@@ -20,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"
   },
   "eslintConfig": {
     "extends": "react-app"

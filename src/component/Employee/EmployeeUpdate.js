@@ -1,22 +1,21 @@
 import React, { memo } from "react";
-import Select from "react-select";
+import DatePicker from "react-datepicker";
+import "../../App.css";
 
-const empAdd = ({
-  data,
-  onChangeOfEmployeeForm,
+import "react-datepicker/dist/react-datepicker.css";
+const EmployeeUpdate = ({
+  employee,
+  projectName,
+  selectedValue,
+  endDate,testdate,
   submitFromList,
-  selectEmployee,
+  datePickervalidation,
+
+  onChangeOfEmployeeForm,
+  errors,
   cancel
 }) => {
-  const [
-    employess,
-    employee,
-    selectedOption,
-    projectName,
-    errors
-  ]= data;
-
-  console.log("employess", employess);
+  
   
   return (
     <div className="row">
@@ -42,14 +41,14 @@ const empAdd = ({
               Employee Name :
             </label>
             <div className="col-md-6">
-              <Select
-                className="react-selectcomponent"
-                value={selectedOption}
-                onChange={selectEmployee}
-                getOptionLabel={option => `${option.fullName}`}
-                options={employess}
+              <input
+                type="text"
+                id="emp_name"
+                className="form-control"
+                name="employeeName"
+                value={employee.fullName}
+                disabled
               />
-              <div className="text-danger">{ errors.name }</div>
             </div>
           </div>
           <div className="form-group row">
@@ -62,7 +61,7 @@ const empAdd = ({
                 id="emp_id"
                 className="form-control"
                 name="empid"
-                value={employee.id }
+                value={employee.id}
                 disabled
               />
             </div>
@@ -77,7 +76,7 @@ const empAdd = ({
                 id="email_address"
                 className="form-control"
                 name="emailId"
-                value={employee.emailId }
+                value={employee.emailId}
                 disabled
               />
             </div>
@@ -117,17 +116,20 @@ const empAdd = ({
               Start Date :
             </label>
             <div className="col-md-6">
-              <input
-                id="employee_start_date"
+              <DatePicker
+                id="employee_start_dates"
                 name="startDate"
-                type="date"
-                className="form-control"
-                value={employee.startDate }
-                onChange={onChangeOfEmployeeForm}
+                className="form-control datepicker"
+                placeholder="DD/MM/YYYY"
+                minDate={employee.endDate}
+                maxDate={new Date()}
+                value={employee.startDate}
+                onChange={(value, id) => {
+                  datePickervalidation(value, "startDate");
+                }}
               />
-              <div className="text-danger">
-                {errors.startDate}
-              </div>
+
+              <div className="text-danger">{errors.startDate}</div>
             </div>
           </div>
           <div className="form-group row">
@@ -135,17 +137,19 @@ const empAdd = ({
               End Date :
             </label>
             <div className="col-md-6">
-              <input
+              <DatePicker
                 id="employee_end_date"
                 name="endDate"
-                type="date"
-                className="form-control"
-                value={employee.endDate }
-                onChange={onChangeOfEmployeeForm}
+                placeholder="DD/MM/YYYY"
+                minDate={testdate ? testdate : new Date()}
+                value={employee.endDate}
+                className="form-control datepicker"
+                onChange={(value, id) => {
+                  datePickervalidation(value, "endDate");
+                }}
               />
-              <div className="text-danger">
-                { errors.startDate }
-              </div>
+
+              <div className="text-danger">{errors.endDate}</div>
             </div>
           </div>
           <div className="form-group row">
@@ -158,12 +162,10 @@ const empAdd = ({
                 name="projectAllocation"
                 type="number"
                 className="form-control"
-                value={ employee.projectAllocation }
+                value={employee.projectAllocation}
                 onChange={onChangeOfEmployeeForm}
               />
-              <div className="text-danger">
-                { errors.projectAllocation }
-              </div>
+              <div className="text-danger">{errors.projectAllocation}</div>
             </div>
           </div>
 
@@ -180,4 +182,24 @@ const empAdd = ({
     </div>
   );
 };
-export default memo(empAdd);
+
+export default memo(EmployeeUpdate);
+
+
+//  <input
+//    id="employee_start_date"
+//    name="startDate"
+//    type="date"
+//    className="form-control"
+//    value={employee.startDate}
+//    onChange={onChangeOfEmployeeForm}
+//  />;
+
+  // <input
+  //   id="employee_end_date"
+  //   name="endDate"
+  //   type="date"
+  //   className="form-control"
+  //   value={employee.endDate}
+  //   onChange={onChangeOfEmployeeForm}
+  // />;

@@ -18,10 +18,10 @@ function App() {
                     <Link to={`/`}>Dashboard</Link>
                   </li>
                   <li>
-                    <Link to={`/component/EmployeeList`}>Show Allocation</Link>
+                    <Link to={`/Component/Employee`}>Show Allocation</Link>
                   </li>
                   <li>
-                    <Link to={`/component/Project`}>Show Project</Link>
+                    <Link to={`/Component/Project`}>Show Project</Link>
                   </li>
                 </ul>
               </nav>

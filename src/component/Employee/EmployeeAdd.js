@@ -1,14 +1,23 @@
 import React, { memo } from "react";
-const empEdit = ({
-  employee,
-  projectName,
-  submitFromList,
+import Select from "react-select";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+// import moduleName from '../../App'
+import "../../App.css";
+
+
+const EmployeeAdd = ({
+
+  data,
   onChangeOfEmployeeForm,
-  errors,
+  submitFromList,
+  selectEmployee,
+  datePickervalidation,
   cancel
 }) => {
- 
-   return (
+  const [employess, employee, selectedOption, projectName, errors,selectedValue,endDate,testdate] = data;
+
+  return (
     <div className="row">
       <div className="col-12">
         <form onSubmit={submitFromList}>
@@ -32,14 +41,14 @@ const empEdit = ({
               Employee Name :
             </label>
             <div className="col-md-6">
-              <input
-                type="text"
-                id="emp_name"
-                className="form-control"
-                name="employeeName"
-                value={employee.fullName}
-                disabled
+              <Select
+                className="react-selectcomponent"
+                value={selectedOption}
+                onChange={selectEmployee}
+                getOptionLabel={option => `${option.fullName}`}
+                options={employess}
               />
+              <div className="text-danger">{errors.name}</div>
             </div>
           </div>
           <div className="form-group row">
@@ -107,15 +116,27 @@ const empEdit = ({
               Start Date :
             </label>
             <div className="col-md-6">
-              <input
+              <DatePicker
                 id="employee_start_date"
                 name="startDate"
-                type="date"
-                className="form-control"
-                value={employee.startDate}
-                onChange={onChangeOfEmployeeForm}
+                placeholder="DD/MM/YYYY"
+                value={selectedValue}
+                className="form-control datepicker"
+                minDate={new Date()}
+                maxDate={
+                  Math.floor(Date.parse(endDate)) ===
+                  Math.floor(Date.parse(testdate))
+                    ? ""
+                    : Math.floor(Date.parse(endDate)) <
+                      Math.floor(Date.parse(selectedValue))
+                    ? endDate
+                    : testdate
+                }
+                onChange={(value, id) => {
+                  datePickervalidation(value, "startDate");
+                }}
               />
-              <div className="text-danger">{errors.endDate}</div>
+              <div className="text-danger">{errors.startDate}</div>
             </div>
           </div>
           <div className="form-group row">
@@ -123,15 +144,19 @@ const empEdit = ({
               End Date :
             </label>
             <div className="col-md-6">
-              <input
+              <DatePicker
                 id="employee_end_date"
                 name="endDate"
-                type="date"
-                className="form-control"
-                value={employee.endDate}
-                onChange={onChangeOfEmployeeForm}
+                placeholder="DD/MM/YYYY"
+                minDate={testdate ? testdate : new Date()}
+                value={endDate}
+                className="form-control datepicker"
+                onChange={(value, id) => {
+                  datePickervalidation(value, "endDate");
+                }}
               />
-              <div className="text-danger">{errors.endDate}</div>
+
+              <div className="text-danger">{errors.startDate}</div>
             </div>
           </div>
           <div className="form-group row">
@@ -164,5 +189,22 @@ const empEdit = ({
     </div>
   );
 };
+export default memo(EmployeeAdd);
 
-export default memo(empEdit);
+// <input
+//   id="employee_start_date"
+//   name="startDate"
+//   type="date"
+//   className="form-control"
+//   value={employee.startDate}
+//   onChange={onChangeOfEmployeeForm}
+// />;
+
+// <input
+//   id="employee_end_date"
+//   name="endDate"
+//   type="date"
+//   className="form-control"
+//   value={employee.endDate}
+//   onChange={onChangeOfEmployeeForm}
+// />;

@@ -7,3 +7,8 @@ ul.nav.navbar-nav li{
 ul.nav.navbar-nav li.active a{
     color: #2508a5;
 }
+.myContainer div {
+  width: 100%;
+}
+.datepicker{ 
+    margin-right: 397px  !important}

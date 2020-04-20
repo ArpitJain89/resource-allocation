@@ -1,21 +1,19 @@
 import React, { createContext, useState } from "react";
 import PropTypes from "prop-types";
+const resourceData = require("../assets/employees.json");
 
 export const {
   Provider: EmployeeProvider,
   Consumer: EmployeeConsumer
 } = createContext();
 
-
-const resourceData = require("../assets/employees.json");
-
 export const EmployeeContext = ({ children }) => {
-  const [theme, setTheme] = useState(resourceData);
+  const [data, setData] = useState(resourceData);
   return (
     <EmployeeProvider
       value={{
-        theme,
-        changeTheme: newTheme => setTheme(newTheme)
+        data,
+        changeData: newTheme => setData(newTheme)
       }}
     >
       {children}

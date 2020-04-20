@@ -88,8 +88,9 @@
       "description": "This project is  related to Harman",
       "clientName": "Tanvir",
       "unit": "Vision Corporation",
-      "startDate": "2010-02-01",
-      "endDate": "2010-04-09",
+      "startDate": "18-04-2020",
+      "endDate":
+      "22-05-2020",
       "managerName": "Pranav",
       "employees": [
         {
@@ -98,8 +99,8 @@
           "fullName": "Shital Thigale",
           "jobLevel": "L2",
           "designation": "Developer",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "11-04-2029",
+          "endDate": "18-05-2020",
           "allocation": 20,
           "projectAllocation": 20
         },
@@ -109,8 +110,8 @@
           "fullName": "pravin Kale",
           "jobLevel": "L1",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-02-2020",
+          "endDate": "18-07-2020",
           "allocation": 10,
           "projectAllocation": 10
         }
@@ -122,8 +123,8 @@
       "description": "This project related to Bajaj",
       "clientName": "nee",
       "unit": "Development",
-      "startDate": "2010-02-01",
-      "endDate": "2014-04-02",
+      "startDate": "18-01-2020",
+      "endDate": "18-08-2020",
       "managerName": "AJAY",
       "employees": [
         {
@@ -132,8 +133,8 @@
           "fullName": "Priya Sharma",
           "jobLevel": "L1",
           "designation": "QA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "10-04-2020",
+          "endDate": "11-09-2020",
           "allocation": 20,
           "projectAllocation": 10
         },
@@ -143,8 +144,8 @@
           "fullName": "Maya Kale",
           "jobLevel": "L2",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "19-04-2020",
+          "endDate": "18-08-2020",
           "allocation": 30,
           "projectAllocation": 30
         }
@@ -156,8 +157,8 @@
       "description": "This project is related to PCYC",
       "clientName": "Ernest",
       "unit": "Project Operations",
-      "startDate": "2010-02-01",
-      "endDate": "2014-04-02",
+      "startDate": "18-04-2020",
+      "endDate": "18-08-2020",
       "managerName": "Ruchi",
       "employees": [
         {
@@ -166,8 +167,8 @@
           "fullName": "Priya Sharma",
           "jobLevel": "L1",
           "designation": "QA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "08-04-2020",
+          "endDate": "18-05-2020",
           "allocation": 20,
           "projectAllocation": 10
         }
@@ -189,8 +190,8 @@
           "fullName": "Shubhi nikam",
           "jobLevel": "L3",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-06-2020",
           "allocation": 20,
           "projectAllocation": 10
         },
@@ -200,8 +201,8 @@
           "fullName": "Nirav Dube",
           "jobLevel": "L2",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-07-2020",
           "allocation": 20,
           "projectAllocation": 10
         }
@@ -213,8 +214,8 @@
       "description": "This project is  related to syntel",
       "clientName": "US",
       "unit": "Vision Operations",
-      "startDate": "2010-02-01",
-      "endDate": "2010-04-09",
+      "startDate": "18-03-2020",
+      "endDate": "10-04-2020",
       "managerName": "Diwya",
       "employees": [
         {
@@ -223,8 +224,8 @@
           "fullName": "Akash Shinde",
           "jobLevel": "L1",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-06-2020",
           "allocation": 10,
           "projectAllocation": 10
         },
@@ -234,8 +235,8 @@
           "fullName": "Ruchi Yadav",
           "jobLevel": "L1",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-05-2020",
           "allocation": 10,
           "projectAllocation": 10
         },
@@ -245,8 +246,8 @@
           "fullName": "Shreya Kale",
           "jobLevel": "L3",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-06-2020",
           "allocation": 10,
           "projectAllocation": 10
         },
@@ -256,8 +257,8 @@
           "fullName": "Shubhi nikam",
           "jobLevel": "L3",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-05-2020",
           "allocation": 20,
           "projectAllocation": 10
         },
@@ -267,8 +268,8 @@
           "fullName": "Nirav Dube",
           "jobLevel": "L2",
           "designation": "BA",
-          "startDate": "2010-02-01",
-          "endDate": "2014-04-02",
+          "startDate": "18-04-2020",
+          "endDate": "18-07-2020",
           "allocation": 20,
           "projectAllocation": 10
         }

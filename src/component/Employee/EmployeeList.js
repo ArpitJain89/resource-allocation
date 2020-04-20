@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-const empList = ({ selectedProjectEmployees, upDateEmployee }) => {
-  const show='edit';
+const EmployeeList = ({ selectedProjectEmployees, upDateEmployee }) => {
+  const show = "edit";
   return (
     <div>
       <table className="table mt-3">
@@ -30,7 +30,7 @@ const empList = ({ selectedProjectEmployees, upDateEmployee }) => {
                   <button
                     type="button"
                     onClick={() => {
-                      upDateEmployee(employee,show);
+                      upDateEmployee(employee, show);
                     }}
                   >
                     Edit
@@ -50,4 +50,4 @@ const empList = ({ selectedProjectEmployees, upDateEmployee }) => {
   );
 };
 
-export default memo(empList);
+export default memo(EmployeeList);

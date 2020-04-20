@@ -1,15 +1,22 @@
 import React from "react";
-import "./Employee.css";
+// import "./Employee.css";
 import Select from "react-select";
-import EmpList from "./empList";
-import EmpEdit from "./empEdit";
-import EmpAdd from "./empAdd";
-import { EmployeeConsumer } from "../context/EmployeeContext";
-class EmployeeList extends React.Component {
+import EmployeeList from "./EmployeeList";
+import EmployeeUpdate from "./EmployeeUpdate";
+import EmployeeAdd from "./EmployeeAdd";
+// import { EmployeeConsumer } from "../context/EmployeeContext";
+import { EmployeeConsumer } from "../../context/EmployeeContext";
+import moment from "moment";
+
+class Employee extends React.Component {
   selectedProjectEmployees = [];
   constructor(props) {
     super(props);
     this.state = {
+      selectedValue: new Date(),
+      endDate: new Date(),
+      testdate: new Date(),
+
       resourceData: {
         employees: [],
         projects: []
@@ -47,11 +54,13 @@ class EmployeeList extends React.Component {
           }
         );
       }
+      // eslint-disable-next-line react/no-direct-mutation-state
       this.state.resourceData.employees = this.state.employees;
+      // eslint-disable-next-line react/no-direct-mutation-state
       this.state.resourceData.projects = this.state.projects;
       this.update = true;
       this.setState({
-      ...this.state.resourceData,
+        ...this.state.resourceData,
         selectedProjectEmployees: this.selectedProjectEmployees,
         show: "list"
       });
@@ -71,8 +80,34 @@ class EmployeeList extends React.Component {
       errors: {}
     });
   }
+  datePickervalidation(value, id) {
+    const date = moment(value);
+    if (id === "startDate") {
+      this.setState({
+        selectedValue: date.format("DD-MM-YYYY"),
+        testdate: value,
+        employee: {
+          ...this.state.employee,
+          [id]: date.format("DD-MM-YYYY")
+        }
+      });
+    } else {
+      const date = moment(value);
+      this.setState({
+        endDate: date.format("DD-MM-YYYY"),
+        testdate: value,
+               employee: {
+          ...this.state.employee,
+          [id]: date.format("DD-MM-YYYY")
+        }
+      });
+    }
+  }
+
 
   onChangeOfEmployeeForm(event) {
+    
+    
     let propertyName = event.target.name;
     let propertyValue = event.target.value;
     if (propertyName === "projectAllocation") {
@@ -92,6 +127,7 @@ class EmployeeList extends React.Component {
       errors: {}
     });
   }
+
   validateForm() {
     let fields = this.state.employee;
     const { errors } = this.state;
@@ -121,12 +157,12 @@ class EmployeeList extends React.Component {
   cancelEvent = () => {
     this.setState({ show: "list", errors: {} });
   };
-  
+
   componentDidMount() {
     this.resourceData = JSON.parse(this.resourceData);
     const { employees, projects } = this.resourceData;
     this.setState({
-      resourceData:this.resourceData,
+      resourceData: this.resourceData,
       employees,
       projects
     });
@@ -137,7 +173,10 @@ class EmployeeList extends React.Component {
       this.state.employee,
       this.state.selectedOption,
       this.projectName,
-      this.state.errors
+      this.state.errors,
+      this.state.selectedValue,
+      this.state.endDate,
+      this.state.testdate
     ];
 
     return (
@@ -145,13 +184,16 @@ class EmployeeList extends React.Component {
         <div>
           <EmployeeConsumer>
             {value => {
-              this.resourceData = JSON.stringify(value.theme);
-              if (this.update) {
-                value.changeTheme(this.state.resourceData);
+              this.resourceData = JSON.stringify(value.data);
+              // eslint-disable-next-line no-lone-blocks
+              {
+                this.state.update === true ||
+                  value.changeData(this.state.resourceData);
               }
             }}
           </EmployeeConsumer>
         </div>
+
         {this.state.show === "list" ? (
           <div>
             <div className="row">
@@ -182,7 +224,6 @@ class EmployeeList extends React.Component {
                       selectedProjectEmployees: this.selectedProjectEmployees,
                       selectedOption: this.selectedOption
                     });
-                    // this.onClickOfShowAllocation();
                   }}
                 >
                   Show Allocation
@@ -201,7 +242,7 @@ class EmployeeList extends React.Component {
               </div>
             </div>
 
-            <EmpList
+            <EmployeeList
               selectedProjectEmployees={this.state.selectedProjectEmployees}
               upDateEmployee={(employee, show) => {
                 this.setState({
@@ -214,12 +255,16 @@ class EmployeeList extends React.Component {
         ) : (
           <div>
             {this.state.show === "edit" ? (
-              <EmpEdit
+              <EmployeeUpdate
                 employee={this.state.employee}
                 errors={this.state.errors}
                 projectName={this.projectName}
+                
                 submitFromList={event => {
                   this.submitFromList(event);
+                }}
+                datePickervalidation={(e, id) => {
+                  this.datePickervalidation(e, id);
                 }}
                 onChangeOfEmployeeForm={e => {
                   this.onChangeOfEmployeeForm(e);
@@ -229,8 +274,11 @@ class EmployeeList extends React.Component {
                 }}
               />
             ) : (
-              <EmpAdd
+              <EmployeeAdd
                 data={data}
+                datePickervalidation={(e, id) => {
+                  this.datePickervalidation(e, id);
+                }}
                 selectEmployee={emp => {
                   this.getSelectedEmployee(emp);
                 }}
@@ -252,4 +300,4 @@ class EmployeeList extends React.Component {
   }
 }
 
-export default EmployeeList;
+export default Employee;

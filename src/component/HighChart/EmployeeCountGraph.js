@@ -29,8 +29,7 @@ class EmployeeCountGraph extends React.Component {
       }
     ]
   };
- 
-  
+
   getEmployeeDetails() {
     this.employees = this.props.resourceData.employees;
     this.projects = this.props.resourceData.projects;
@@ -46,18 +45,15 @@ class EmployeeCountGraph extends React.Component {
       }
     ];
     this.optionsForProjectEmp.series[0].data = seriesForProjectEmp[0].data;
+  }
 
-}
-
-  componentDidMount(){
-    this.getEmployeeDetails()
+  componentDidMount() {
+    this.getEmployeeDetails();
     this.instance = Highcharts.chart("projEmp-id", this.optionsForProjectEmp);
   }
 
   render() {
-    return (
-        <div className="col-sm-6" id="projEmp-id" />
-    );
+    return <div className="col-sm-6" id="projEmp-id" />;
   }
 }
 

@@ -33,7 +33,7 @@ class Table extends React.Component {
         <div>
           <table className="table mt-3">
             <thead className="thead-light ">
-              <tr >{this.getHeader()}</tr>
+              <tr>{this.getHeader()}</tr>
             </thead>
             <tbody>{this.getRowsData()}</tbody>
           </table>

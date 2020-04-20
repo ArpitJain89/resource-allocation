@@ -1,9 +1,9 @@
 import React from "react";
 import Table from "./Table";
 
-const resourceData = require("../assets/employees.json");
+const resourceData = require("../../assets/employees.json");
 
-class Project extends React.Component {
+class projects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,8 +18,8 @@ class Project extends React.Component {
       "clientName",
       "managerName",
       "unit",
-      "startDate" ,
-      "endDate",
+      "startDate",
+      "endDate"
     ];
     this.setState({
       data: resourceData.projects,
@@ -35,4 +35,4 @@ class Project extends React.Component {
     );
   }
 }
-export default Project;
+export default projects;
